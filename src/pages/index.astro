@@ -26,7 +26,7 @@ const members = await getCollection("member");
   <div class="bg-black min-h-screen text-white">
     {/* Hero Section */}
     <section
-      class="relative flex justify-center items-center h-screen overflow-hidden"
+      class="relative flex justify-center items-center h-screen"
     >
       <div class="z-0 absolute inset-0">
         <div
@@ -41,7 +41,7 @@ const members = await getCollection("member");
       <div class="z-20 relative px-4 text-center container">
         <section
           id="footer-logo"
-          class="flex flex-col justify-center items-center mx-3 sm:min-w-[350px] text-center align-middle"
+          class="flex flex-col justify-center items-center mx-3 text-center align-middle"
         >
           <a title={details[0].data.name} href="/">
             <img
@@ -56,7 +56,7 @@ const members = await getCollection("member");
           </a>
         </section>
         <h1
-          class="bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 mx-auto mb-6 max-w-[736px] font-extrabold text-transparent text-5xl md:text-7xl"
+          class="bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 mx-auto mb-6 max-w-[736px] font-extrabold text-transparent text-3xl md:text-5xl"
         >
           {details[0].data.description}
         </h1>
