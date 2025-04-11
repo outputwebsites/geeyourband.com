@@ -1,0 +1,71 @@
+# See full Decap documentation for further configuration: https://decapcms.org/docs/intro/
+backend:
+  name: git-gateway
+  repo: outputwebsites/geeyourband.com # Path to the relevant GitHub repository: owner-name/repo-name
+  branch: main # Branch to update, defaults to master
+local_backend: true
+editor:
+  preview: false
+media_folder: src/assets/images/media # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
+public_folder: src/assets/images/media # Ensure that this path is the same as the media_folder path above.
+logo_url: https://geeyourband.com/logo.svg # change url to a link to the image you want to use, no file paths, must be a URL
+display_url: https://geeyourband.com
+collections:
+# Define the collections that will be available in the CMS. Collections Docs = https://decapcms.org/docs/collection-folder  |  Widgets Docs = https://decapcms.org/docs/widgets
+- label: "Band Details" # Used in the admin dashboard UI
+  name: "details" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
+  files:
+  - label: "Band Details" # Used in the admin dashboard UI
+    name: "details" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
+    file: "src/content/details/details.yml" # The path to the folder where the documents are stored
+    fields:
+    - { label: "Name", name: "name", widget: "string", hint: "Full name of the band." }
+    - { label: "Abbreviation", name: "abbreviation", widget: "string", hint: "Short name of the band." }
+    - { label: "Email", name: "email", widget: "string", hint: "Email of the band." }
+    - { label: "Phone Number", name: "phone", widget: "string", hint: "Main/office telephone number of the band. Use (000) 000-0000 format." }
+    - { label: "Description", name: "description", widget: "text", hint: "Short description of the band. (Max 1-2 sentences (140 character max)." }
+    - { label: "Website URL", name: "link_website", widget: "string", hint: "Domain name (website link/URL) of the band." }
+    - { label: "Facebook URL", name: "link_facebook", widget: "string", hint: "Facebook link/URL for the band (not an individual person)." }
+    - { label: "Instagram URL", name: "link_instagram", widget: "string", hint: "Instagram link/URL for the band (not an individual person)." }
+    - { label: "Venmo URL", name: "link_venmo", widget: "string", hint: "Venmo link/URL for the band (not an individual person)." }
+    - { label: "Band Video", name: "band_video", widget: "string", hint: "Link/URL for the official band video (reel of clips or performance recording)." }
+    - { label: "Homepage Copy", name: "homepage_content", widget: "markdown", hint: "Write your homepage content in the box above." }
+    - label: "Keywords"
+      name: "keywords"
+      label_singular: "Keyword"
+      widget: "list"
+      add_to_top: true
+      collapsed: true
+      minimize_collapsed: true
+      summary: "{{fields.keyword}}"
+      field: { label: Keyword, name: keyword, widget: string, hint: "Keyword that describes any aspect of the band which someone may use to search for the band." }
+- name: "event" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
+  label: "Events" # Used in the admin dashboard UI
+  label_singular: "Event" # Used in the admin dashboard UI
+  description: "Events are used to display upcoming band events and performances. More detailed information can help attract more attendees." # Used in the admin dashboard UI
+  identifier_field: title # The field that will be used to identify the document in the CMS
+  folder: "src/content/event" # The path to the folder where the documents are stored
+  create: true # Allow users to create new documents in this collection
+  fields:
+  - { label: "Title", name: "title", widget: "string", hint: "Keep titles brief yet descriptive." }
+  - { label: "Member", name: "member", widget: relation, collection: member, multiple: true, search_fields: [ "name" ], display_fields: [ "name" ], value_field: "{{slug}}", hint: "Select the member(s) in the event." }
+  - { label: "Body", name: "body", widget: "markdown", hint: "Write your event content in the box above." }
+  - { label: "Featured Image", name: "image", widget: "image", hint: "Add a photo to display at the top of the event." }
+  - { label: "Featured Image Caption", name: "imageAlt", widget: "string", required: false, hint: "Add a caption to describe the featured image." }
+  - { label: "Publish Date", name: "date", widget: "datetime", default: "{{now}}", hint: "Choose the date and time the event was published or written." }
+  - { label: "Tags", name: "tags", widget: "list", required: false, hint: "Add comma-separated tags to help categorize your event. (Don't press space!)" }
+- name: "member" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
+  label: "Members" # Used in the admin dashboard UI
+  label_singular: "Member" # Used in the admin dashboard UI
+  description: "Members are used to fill out the band members section." # Used in the admin dashboard UI
+  identifier_field: name # The field that will be used to identify the document in the CMS
+  folder: "src/content/member" # The path to the folder where the documents are stored
+  create: true # Allow users to create new documents in this collection
+  fields:
+  - { label: "Nickname", name: "name", widget: "string", hint: "Memorable nickname for each band member." }
+  - { label: "Real Name", name: "real_name", required: false, widget: "string", hint: "Enter your full name." }
+  - { label: "Adjective", name: "adjective", required: false, widget: "string", hint: "Catchy and unique adjective to describe each band member." }
+  - { label: "Instrument", name: "instrument", required: false, widget: "string", hint: "Instrument(s) associated with each band member." }
+  - { label: "Short Bio", name: "bio", widget: "string", hint: "Add a short biography to display under your member credits." }
+  - { label: "Order", name: "order", widget: "string", hint: "Set the order of clinicians on the clinicians page. 1 = first, 2 = seconds, and so on..." }
+  - { label: "Portrait Image", name: "photo", widget: "image", hint: "Add a square portrait image featuring a color head shot." }

@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+
+const details = await getCollection("details");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+    <title>
+      {details[0].data.domain} Dashboard
+    </title>
+
+    <!--Favicons-->
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicons/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicons/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicons/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Netlify Identity widget -->
+    <script
+      is:inline
+      src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <!-- Decap CMS script -->
+    <script is:inline src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+---
+import { getCollection } from "astro:content";
+import { ClientRouter } from "astro:transitions";
+import "@fontsource-variable/geologica";
+import geologicaWoff2 from "@fontsource-variable/geologica/files/geologica-latin-wght-normal.woff2?url";
+import "@fontsource-variable/fredoka";
+import fredokaWoff2 from "@fontsource-variable/fredoka/files/fredoka-latin-wght-normal.woff2?url";
+
+import "@styles/globals.css";
+
+const { description, title } = Astro.props;
+const details = await getCollection("details");
+---
+
+<html lang="en">
+  <head>
+    <!-- View Transitions support -->
+    <ClientRouter />
+
+    <!-- Preloads font -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={geologicaWoff2}
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={fredokaWoff2}
+      crossorigin="anonymous"
+    />
+
+    <!-- Standard meta tags -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+
+    <!-- SEO meta tags -->
+    <meta
+      name="keywords"
+      content={details[0].data.keywords && details[0].data.keywords.length > 0
+        ? details[0].data.keywords.join(", ")
+        : ""}
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="canonical"
+      href={`https://${details[0].data.link_website.toLowerCase()}${Astro.url.pathname}`}
+    />
+    <title>
+      {
+        Astro.url.pathname === "/"
+          ? `${details[0].data.name}`
+          : `${title} | ${details[0].data.name}`
+      }
+    </title>
+    <meta property="og:title" content={title} />
+    <meta property="og:site_name" content={title} />
+    <meta name="application-name" content={title} />
+    <meta name="apple-mobile-web-app-title" content={title} />
+    <meta name="twitter:title" content={title} />
+    <meta name="description" content={description} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      property="og:url"
+      content={`https://${details[0].data.link_website.toLowerCase()}${Astro.url.pathname}`}
+    />
+    <meta property="og:image" content="/assets/favicons/banner.png" />
+    <meta
+      property="og:image:secure_url"
+      content="/assets/favicons/banner.png"
+    />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/assets/favicons/banner.png" />
+    <meta name="twitter:image:width" content="1920" />
+    <meta name="twitter:image:height" content="1080" />
+    <meta name="twitter:image:alt" content={title} />
+
+    <!-- Favicons -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicons/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicons/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/favicons/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content={details[0].data.name} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Umami Analytics -->
+    <!-- <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id=""></script> -->
+  </head>
+  <body
+    class="flex flex-col justify-between min-h-screen font-sans align-middle"
+  >
+    <!-- Screen reader skip main nav -->
+    <a class="skip" aria-label="skip to main content" href="#main"
+      >Click To Skip To Main Content</a
+    >
+    <main
+      id="main"
+      role="main"
+      class="flex flex-col flex-1 justify-center align-middle grow"
+    >
+      <slot />
+    </main>
+  </body>
+</html>

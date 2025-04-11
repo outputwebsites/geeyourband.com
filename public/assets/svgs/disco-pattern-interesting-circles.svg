@@ -1,0 +1,8 @@
+<svg width="48" height="32" viewBox="0 0 48 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="disco-pattern" patternUnits="userSpaceOnUse" width="48" height="32">
+      <path d="M27 32a6 6 0 0 1 6-6 10 10 0 1 0 0-20 6 6 0 0 1-6-6h2a4 4 0 0 0 4 4c6.627 0 12 5.373 12 12s-5.373 12-12 12a4 4 0 0 0-4 4h-2zm-6 0a6 6 0 0 0-6-6 10 10 0 1 1 0-20 6 6 0 0 0 6-6h-2a4 4 0 0 1-4 4C8.373 4 3 9.373 3 16s5.373 12 12 12a4 4 0 0 1 4 4h2z" fill-rule="evenodd" fill="#ff00ff"/>
+    </pattern>
+  </defs>
+  <rect width="48" height="32" fill="url(#disco-pattern)" />
+</svg>

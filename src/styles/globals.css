@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+  /* For the base HTML and body tags: set padding/margin, font, etc */
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: "Geologica Variable", system-ui, sans-serif;
+    letter-spacing: 0.2px;
+    scroll-behavior: smooth;
+    background-color: black;
+    color: white;
+  }
+
+  /* Change selection background */
+  ::selection {
+    @apply bg-lime-400 text-white;
+    text-shadow: none;
+  }
+
+  /* Increase paragraph tag size default to tailwind-xl */
+  p {
+    font-size: 1.25rem;
+    /* 20px - xl */
+    line-height: 1.75rem;
+    /* 28px - 7 */
+  }
+
+  /* Images */
+  img {
+    @apply flex justify-center items-center bg-black overflow-hidden text-gray-700 text-center align-middle;
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mx-0;
+  }
+
+  h1 {
+    @apply text-4xl sm:text-5xl;
+  }
+
+  h2 {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl sm:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg sm:text-xl;
+  }
+
+  h6 {
+    @apply text-lg;
+  }
+}
+
+@layer components {
+
+  .button {
+    @apply inline-flex justify-center items-center gap-2 disabled:opacity-50 px-4 py-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 [&_svg]:size-4 font-medium text-sm whitespace-nowrap transition-colors [&_svg]:pointer-events-none disabled:pointer-events-none [&_svg]:shrink-0;
+  }
+
+  .button-outline {
+    @apply bg-black hover:bg-slate-600 border border-white hover:text-white;
+  }
+
+  /* Custom Font */
+  .fredoka {
+    font-family: "Fredoka", sans-serif;
+    font-weight: 400;
+  }
+
+  @supports (font-variation-settings: normal) {
+    .fredoka {
+      font-family: "Fredoka Variable", sans-serif;
+      font-weight: 400;
+      font-variation-settings: "wdth" 75, "wght" 500;
+    }
+  }
+
+  /* Skip Link */
+  @media only screen and (min-width: 0em) {
+    .skip {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1111111;
+    }
+  }
+
+  .rainbow-text {
+    background: linear-gradient(to right, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: bold;
+  }
+
+  .rainbow-border {
+    background: linear-gradient(45deg, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9, #ff3d00);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  .rainbow-border-top {
+    height: 4px;
+    background: linear-gradient(to right, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9);
+  }
+
+  .retro-button {
+    background: linear-gradient(45deg, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+
+  .retro-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  .retro-button-small {
+    background: linear-gradient(45deg, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .retro-button-small:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  .glow-on-hover {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glow-on-hover:after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    background: linear-gradient(45deg, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9);
+    background-size: 400% 400%;
+    filter: blur(15px);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+    animation: gradient 15s ease infinite;
+  }
+
+  .glow-on-hover:hover:after {
+    opacity: 1;
+  }
+
+  .animate-pulse-beat {
+    animation: pulse 2s cubic-bezier(0.5, 0, 0.7, 1) infinite;
+    animation: pulse-beat 2s infinite;
+    animation-timing-function: cubic-bezier(0.1, 0, 0.1, 1);
+    animation-fill-mode: both;
+  }
+
+  @keyframes pulse-beat {
+    0%, 100% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 0.85;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
