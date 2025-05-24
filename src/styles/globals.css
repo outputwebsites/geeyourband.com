@@ -95,17 +95,7 @@
     }
   }
 
-  /* Skip Link */
-  @media only screen and (min-width: 0em) {
-    .skip {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1111111;
-    }
-  }
-
+  /* Rainbow Text and Border */
   .rainbow-text {
     background: linear-gradient(to right, #ff3d00, #ffea00, #00e676, #2979ff, #d500f9);
     -webkit-background-clip: text;
@@ -227,5 +217,23 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Skip Link */
+@media only screen and (min-width: 0em) {
+  .skip {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1111111;
+  }
+}
+
+/* Scroll Down Arrow */
+@media only screen and (max-height: 775px) {
+  .arrow-continue {
+    display: none;
   }
 }

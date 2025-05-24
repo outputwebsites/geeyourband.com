@@ -81,7 +81,7 @@ const bgColors = [
       </div>
     </div>
     <div
-      class="right-0 bottom-8 left-0 absolute flex justify-center animate-bounce"
+      class="right-0 bottom-8 left-0 absolute flex justify-center animate-bounce arrow-continue"
     >
       <a href="#content" class="text-yellow-400 hover:text-yellow-500">
         <svg
@@ -177,7 +177,7 @@ const bgColors = [
               </div>
               <div class="p-4 text-center">
                 <h3 class="text-pink-400 text-xl">
-                  <em class="opacity-60 text-pink-100">
+                  <em class="opacity-60 px-1 text-pink-100">
                     {member.data.adjective ? member.data.adjective : ""}
                   </em>
                   <br />
@@ -214,7 +214,7 @@ const bgColors = [
         </div>
       </div>
 
-      <div class="space-y-4 mx-auto max-w-3xl">
+      <div class="space-y-5 mx-auto max-w-3xl">
         {
           [
             {
@@ -236,10 +236,10 @@ const bgColors = [
           ].map((show, index) => (
             <div
               id={"event-" + index}
-              class="flex sm:flex-row flex-col items-center gap-4 bg-gradient-to-r from-purple-900/30 to-pink-900/20 p-4 border border-pink-500/20 hover:border-pink-500/50 rounded-lg transition-all"
+              class="flex sm:flex-row flex-col items-center gap-8 bg-gradient-to-r from-purple-900/30 to-pink-900/20 p-4 border border-pink-500/20 hover:border-pink-500/50 rounded-lg transition-all"
             >
-              <div class="bg-gradient-to-br from-orange-500 to-pink-600 p-4 rounded-lg min-w-[100px] text-center">
-                <span class="font-bold text-xl">{show.date}</span>
+              <div class="bg-gradient-to-br from-orange-500 to-pink-600 p-4 rounded-lg w-full min-w-[100px] font-bold text-xl text-center">
+                {show.date}
               </div>
               <div class="flex-1 sm:text-left text-center">
                 <h3 class="font-bold text-white text-xl">{show.venue}</h3>
@@ -259,7 +259,7 @@ const bgColors = [
       <div class="mt-8 text-center">
         <a
           href="#"
-          class="hover:bg-yellow-400/10 border-yellow-400 text-yellow-400 button"
+          class="bg-yellow-400/10 hover:bg-yellow-400/30 border-yellow-400 text-yellow-400 button"
         >
           View All Shows
         </a>
