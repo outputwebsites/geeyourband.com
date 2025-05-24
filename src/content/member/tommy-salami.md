@@ -5,5 +5,5 @@ adjective: Delectable
 instrument: Guitar
 bio: ""
 order: 4
-photo: src/assets/images/media/derek.webp
+photo: src/assets/images/media/tommy-salami.webp
 ---

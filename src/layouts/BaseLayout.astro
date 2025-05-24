@@ -119,9 +119,78 @@ const details = await getCollection("details");
     <main
       id="main"
       role="main"
-      class="flex flex-col flex-1 justify-center align-middle grow"
+      class="flex flex-col flex-1 justify-center bg-black min-h-screen text-white align-middle grow"
     >
       <slot />
     </main>
+
+    {/* Footer */}
+    <footer id="footer" class="bg-black py-8 border-purple-900/50 border-t">
+      <div class="mx-auto px-4 text-center container">
+        <section
+          id="footer-logo-social"
+          class="flex md:flex-row flex-col justify-center items-center gap-6 md:gap-12 mx-3 mb-12 text-center align-middle"
+        >
+          {/* Logo */}
+          <div class="flex justify-center items-center">
+            <a title={details[0].data.name} href="#">
+              <img
+                src="/assets/svgs/logo.svg"
+                alt={details[0].data.name}
+                width="350"
+                height="350"
+                decoding="async"
+                loading="lazy"
+                class="bg-transparent drop-shadow"
+              />
+            </a>
+          </div>
+          {/* Social Media */}
+          <div
+            class="flex md:flex-col flex-wrap justify-center items-center gap-8"
+          >
+            <a
+              href={details[0].data.link_facebook}
+              target="_blank"
+              rel="noopener"
+              aria-label="Facebook"
+              class="flex items-center gap-2 hover:text-yellow-400 transition"
+            >
+              <img
+                src="/assets/svgs/facebook.svg"
+                alt="Facebook"
+                width="50"
+                height="50"
+                decoding="async"
+                loading="lazy"
+                class="bg-transparent drop-shadow"
+              />
+              Facebook
+            </a>
+            <a
+              href={details[0].data.link_instagram}
+              target="_blank"
+              rel="noopener"
+              aria-label="Instagram"
+              class="flex items-center gap-2 hover:text-yellow-400 transition"
+            >
+              <img
+                src="/assets/svgs/instagram.svg"
+                alt="Instagram"
+                width="50"
+                height="50"
+                decoding="async"
+                loading="lazy"
+                class="bg-transparent drop-shadow"
+              />
+              Instagram
+            </a>
+          </div>
+        </section>
+        <p class="text-purple-300/70 text-sm">
+          © {new Date().getFullYear()} GYBST. <br />All rights reserved.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>

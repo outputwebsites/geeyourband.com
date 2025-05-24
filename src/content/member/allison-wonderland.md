@@ -5,5 +5,5 @@ adjective: Magical
 instrument: Vocalist
 bio: ""
 order: 2
-photo: src/assets/images/media/derek.webp
+photo: src/assets/images/media/allison-wonderland.webp
 ---

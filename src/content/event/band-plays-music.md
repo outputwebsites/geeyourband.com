@@ -7,8 +7,8 @@ member:
   - bobby-dingo
   - tommy-salami
   - leo-dynamite
-image: src/assets/images/media/marble.webp
-imageAlt: Marble
+image: src/assets/images/media/wallpaper-1.webp
+imageAlt: Wallpaper
 date: 2025-03-18T03:06:00.000Z
 ---
 ## Lacerans aliter tetigit praeterea rite

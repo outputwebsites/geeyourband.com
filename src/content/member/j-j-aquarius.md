@@ -5,5 +5,5 @@ adjective: "Boomin'"
 instrument: Bass
 bio: ""
 order: 1
-photo: src/assets/images/media/derek.webp
+photo: src/assets/images/media/jj-aquarius.webp
 ---

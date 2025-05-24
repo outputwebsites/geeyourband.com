@@ -5,5 +5,5 @@ adjective: Feral
 instrument: Drums
 bio: ""
 order: 3
-photo: src/assets/images/media/derek.webp
+photo: src/assets/images/media/bobby-dingo.webp
 ---

@@ -18,7 +18,7 @@
 
   /* Change selection background */
   ::selection {
-    @apply bg-lime-400 text-white;
+    @apply bg-sky-600 text-white;
     text-shadow: none;
   }
 
@@ -32,7 +32,7 @@
 
   /* Images */
   img {
-    @apply flex justify-center items-center bg-black overflow-hidden text-gray-700 text-center align-middle;
+    @apply flex justify-center items-center bg-black/10 overflow-hidden text-gray-400/20 text-center text-sm align-middle;
     max-width: 100%;
     height: auto;
   }
@@ -194,16 +194,21 @@
   }
 
   @keyframes pulse-beat {
-    0%, 100% {
+
+    0%,
+    100% {
       opacity: 1;
     }
+
     25% {
       opacity: 0.85;
     }
+
     50% {
       opacity: 0.8;
     }
   }
+
   @keyframes gradient {
     0% {
       background-position: 0% 50%;

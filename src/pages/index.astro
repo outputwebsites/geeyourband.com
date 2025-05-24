@@ -16,68 +16,74 @@ const details = await getCollection("details");
 const homepage_content = await marked.parse(
   details[0].data.homepage_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
 );
-const members = await getCollection("member");
+const members = (await getCollection("member")).sort(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
+);
+const bgColors = [
+  "bg-amber-400",
+  "bg-rose-400",
+  "bg-yellow-400",
+  "bg-pink-400",
+  "bg-sky-600",
+  "bg-lime-400",
+];
 ---
 
 <BaseLayout
   title={details[0].data.name}
   description={details[0].data.description}
 >
-  <div class="bg-black min-h-screen text-white">
-    {/* Hero Section */}
-    <section
-      class="relative flex justify-center items-center h-screen"
-    >
-      <div class="z-0 absolute inset-0">
-        <div
-          class="z-10 absolute inset-0 bg-gradient-to-b from-purple-900/70 to-black/90"
-        >
-        </div>
-        <div
-          class="absolute inset-0 bg-[url('/assets/svgs/disco-pattern-interesting-circles.svg')] opacity-10 animate-pulse-beat"
-        >
-        </div>
-      </div>
-      <div class="z-20 relative px-4 text-center container">
-        <section
-          id="footer-logo"
-          class="flex flex-col justify-center items-center mx-3 text-center align-middle"
-        >
-          <a title={details[0].data.name} href="/">
-            <img
-              src="/assets/svgs/logo.svg"
-              alt={details[0].data.name}
-              width="350"
-              height="350"
-              decoding="async"
-              loading="lazy"
-              class="bg-transparent drop-shadow"
-            />
-          </a>
-        </section>
-        <h1
-          class="bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 mx-auto mb-6 max-w-[736px] font-extrabold text-transparent text-3xl md:text-5xl"
-        >
-          {details[0].data.description}
-        </h1>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a
-            href="#"
-            class="bg-gradient-to-r from-purple-500 hover:from-purple-600 to-pink-500 hover:to-pink-600 border-0 text-white button"
-          >
-            Upcoming Shows
-          </a>
-          <a
-            href="#"
-            class="bg-gradient-to-r from-pink-500 hover:from-pink-600 to-orange-500 hover:to-orange-600 border-0 text-white button"
-          >
-            Book Us
-          </a>
-        </div>
+  {/* Hero Section */}
+  <section class="relative flex justify-center items-center h-screen">
+    <div class="z-0 absolute inset-0 animate-move-up">
+      <div
+        class="z-10 absolute inset-0 bg-gradient-to-b from-purple-900/70 to-black/90"
+      >
       </div>
       <div
-        class="right-0 bottom-8 left-0 absolute flex justify-center animate-bounce"
+        class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-10 animate-pulse-beat"
       >
+      </div>
+    </div>
+    <div class="z-20 relative px-4 text-center container">
+      <section
+        id="hero-logo"
+        class="flex flex-col justify-center items-center mx-3 text-center align-middle"
+      >
+        <img
+          src="/assets/svgs/logo.svg"
+          alt={details[0].data.name}
+          width="350"
+          height="350"
+          decoding="async"
+          loading="lazy"
+          class="bg-transparent drop-shadow"
+        />
+      </section>
+      <h1
+        class="bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 mx-auto mb-6 pb-1 max-w-[362px] md:max-w-[736px] font-extrabold text-transparent text-3xl md:text-5xl"
+      >
+        {details[0].data.description}
+      </h1>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a
+          href="#upcoming-shows"
+          class="bg-gradient-to-r from-purple-500 hover:from-purple-600 to-pink-500 hover:to-pink-600 border-0 text-white button"
+        >
+          Upcoming Shows
+        </a>
+        <a
+          href="#book-us"
+          class="bg-gradient-to-r from-pink-500 hover:from-pink-600 to-orange-500 hover:to-orange-600 border-0 text-white button"
+        >
+          Book Us
+        </a>
+      </div>
+    </div>
+    <div
+      class="right-0 bottom-8 left-0 absolute flex justify-center animate-bounce"
+    >
+      <a href="#content" class="text-yellow-400 hover:text-yellow-500">
         <svg
           width="24"
           height="24"
@@ -91,312 +97,318 @@ const members = await getCollection("member");
         >
           <path d="M12 5v14M5 12l7 7 7-7"></path>
         </svg>
-      </div>
-    </section>
+      </a>
+    </div>
+  </section>
 
-    {/* Content Section */}
-    <section class="relative bg-black py-20">
-      <div class="absolute inset-0 bg-[url('/disco-pattern.svg')] opacity-10">
-      </div>
-      <div class="z-10 relative mx-auto px-4 container">
-        <div class="flex items-center mb-12">
-          <div
-            class="flex-1 bg-gradient-to-r from-transparent to-purple-500 h-px"
-          >
-          </div>
-          <h2
-            class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
-          >
-            <span>THE SKINNY</span>
-          </h2>
-          <div
-            class="flex-1 bg-gradient-to-l from-transparent to-purple-500 h-px"
-          >
-          </div>
-        </div>
-
-        <section id="blog-post-content" class="overflow-auto">
-          <p set:html={homepage_content} />
-        </section>
-      </div>
-    </section>
-
-    {/* Band Members Section */}
-    <section class="relative bg-black py-20">
-      <div class="absolute inset-0 bg-[url('/disco-pattern.svg')] opacity-10">
-      </div>
-      <div class="z-10 relative mx-auto px-4 container">
-        <div class="flex items-center mb-12">
-          <div
-            class="flex-1 bg-gradient-to-r from-transparent to-purple-500 h-px"
-          >
-          </div>
-          <h2
-            class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
-          >
-            <span>MEET THE BAND</span>
-          </h2>
-          <div
-            class="flex-1 bg-gradient-to-l from-transparent to-purple-500 h-px"
-          >
-          </div>
-        </div>
-
-        <div class="gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {
-            [
-              { name: "Johnny Groove", role: "Lead Vocals & Guitar" },
-              { name: "Stella Starlight", role: "Keyboard & Vocals" },
-              { name: "Funk Master Phil", role: "Bass Guitar" },
-              { name: "Disco Dave", role: "Drums & Percussion" },
-            ].map((member, index) => (
-              <div class="bg-card bg-gradient-to-b from-purple-900/40 to-black shadow-sm border border-purple-700/50 rounded-lg overflow-hidden text-card-foreground">
-                <div class="relative aspect-square">
-                  <img
-                    src={`/placeholder.svg?height=400&width=400&text=${member.name}`}
-                    alt={member.name}
-                    class="object-cover"
-                  />
-                </div>
-                <div class="p-4 text-center">
-                  <h3 class="font-bold text-pink-400 text-xl">{member.name}</h3>
-                  <p class="text-yellow-200">{member.role}</p>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    {/* Upcoming Shows Section */}
-    <section
-      class="relative bg-gradient-to-b from-black to-purple-950/30 py-20"
-    >
-      <div class="absolute inset-0 bg-[url('/disco-pattern.svg')] opacity-5">
-      </div>
-      <div class="z-10 relative mx-auto px-4 container">
-        <div class="flex items-center mb-12">
-          <div
-            class="flex-1 bg-gradient-to-r from-transparent to-pink-500 h-px"
-          >
-          </div>
-          <h2
-            class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
-          >
-            <span>UPCOMING SHOWS</span>
-          </h2>
-          <div
-            class="flex-1 bg-gradient-to-l from-transparent to-pink-500 h-px"
-          >
-          </div>
-        </div>
-
-        <div class="space-y-4 mx-auto max-w-3xl">
-          {
-            [
-              {
-                date: "JUN 15",
-                venue: "Disco Palace",
-                location: "New York, NY",
-              },
-              {
-                date: "JUL 04",
-                venue: "Retro Club",
-                location: "Los Angeles, CA",
-              },
-              {
-                date: "AUG 12",
-                venue: "Funk Factory",
-                location: "Chicago, IL",
-              },
-              { date: "SEP 23", venue: "Groove Lounge", location: "Miami, FL" },
-            ].map((show, index) => (
-              <div class="flex sm:flex-row flex-col items-center gap-4 bg-gradient-to-r from-purple-900/30 to-pink-900/20 p-4 border border-pink-500/20 hover:border-pink-500/50 rounded-lg transition-all">
-                <div class="bg-gradient-to-br from-orange-500 to-pink-600 p-4 rounded-lg min-w-[100px] text-center">
-                  <span class="font-bold text-xl">{show.date}</span>
-                </div>
-                <div class="flex-1 sm:text-left text-center">
-                  <h3 class="font-bold text-white text-xl">{show.venue}</h3>
-                  <p class="text-yellow-200">{show.location}</p>
-                </div>
-                <a
-                  href="#"
-                  class="bg-gradient-to-r from-pink-500 hover:from-pink-600 to-purple-600 hover:to-purple-700 border-0 button"
-                >
-                  Get Tickets
-                </a>
-              </div>
-            ))
-          }
-        </div>
-
-        <div class="mt-8 text-center">
-          <a
-            href="#"
-            class="hover:bg-yellow-400/10 border-yellow-400 text-yellow-400 button"
-          >
-            View All Shows
-          </a>
-        </div>
-      </div>
-    </section>
-
-    {/* Donate Section */}
-    <section class="relative bg-black py-20">
-      <div class="absolute inset-0 bg-[url('/disco-pattern.svg')] opacity-10">
-      </div>
-      <div class="z-10 relative mx-auto px-4 container">
-        <div class="flex items-center mb-12">
-          <div
-            class="flex-1 bg-gradient-to-r from-transparent to-orange-500 h-px"
-          >
-          </div>
-          <h2
-            class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
-          >
-            <span>SUPPORT THE BAND</span>
-          </h2>
-          <div
-            class="flex-1 bg-gradient-to-l from-transparent to-orange-500 h-px"
-          >
-          </div>
-        </div>
-
+  {/* Content Section */}
+  <section id="content" class="relative bg-black py-20">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
         <div
-          class="bg-gradient-to-br from-purple-900/40 to-black mx-auto p-8 border border-purple-500/30 rounded-lg max-w-2xl text-center"
+          class="flex-1 bg-gradient-to-r from-transparent to-purple-500 h-px"
         >
-          <p class="mb-6 text-yellow-100 text-xl">
-            Help us keep the groove alive! <br />Your donations support new music,
-            equipment, and bringing our 70s vibes to more venues near you.
-          </p>
-          <div class="justify-center items-center gap-4 grid grid-cols-2 mx-auto mb-6 text-center">
-            <a
-              href="#"
-              class="bg-gradient-to-r from-orange-500 hover:from-orange-600 to-pink-500 hover:to-pink-600 border-0 text-white button"
-            >
-              PayPal
-            </a>
-            <a
-              href="#"
-              class="bg-gradient-to-r from-orange-500 hover:from-orange-600 to-pink-500 hover:to-pink-600 border-0 text-white button"
-            >
-              Venmo
-            </a>
-          </div>
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>THE SKINNY</span>
+        </h2>
+        <div
+          class="flex-1 bg-gradient-to-l from-transparent to-purple-500 h-px"
+        >
         </div>
       </div>
-    </section>
 
-    {/* Book Us Section */}
-    <section
-      class="relative bg-gradient-to-b from-black to-purple-950/50 py-20"
+      <section
+        id="blog-post-content"
+        class="mx-auto max-w-[700px] text-stone-200"
+      >
+        <p set:html={homepage_content} />
+      </section>
+    </div>
+  </section>
+
+  {/* Band Members Section */}
+  <section id="band-members" class="relative bg-black py-20">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
+        <div
+          class="flex-1 bg-gradient-to-r from-transparent to-purple-500 h-px"
+        >
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>MEET THE BAND</span>
+        </h2>
+        <div
+          class="flex-1 bg-gradient-to-l from-transparent to-purple-500 h-px"
+        >
+        </div>
+      </div>
+
+      <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          members.map((member, index) => (
+            <div
+              id={"band-member-" + index}
+              class="bg-card bg-gradient-to-b from-purple-900/40 to-black shadow-sm border border-purple-700/50 rounded-lg overflow-hidden text-card-foreground"
+            >
+              <div class="relative aspect-square">
+                <img
+                  src={
+                    typeof member.data.photo === "object" &&
+                    member.data.photo !== null &&
+                    "src" in member.data.photo
+                      ? member.data.photo.src.replace(
+                          /^.*\/src\/assets\//,
+                          "/src/assets/",
+                        )
+                      : "/assets/images/placeholder.png"
+                  }
+                  alt={member.data.name}
+                  class={`${bgColors[index % bgColors.length]} w-full h-full object-cover`}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="p-4 text-center">
+                <h3 class="text-pink-400 text-xl">
+                  <em class="opacity-60 text-pink-100">
+                    {member.data.adjective ? member.data.adjective : ""}
+                  </em>
+                  <br />
+                  <strong>{member.data.name}</strong>
+                </h3>
+                <p class="py-2 text-yellow-200">{member.data.instrument}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* Upcoming Shows Section */}
+  <section
+    id="upcoming-shows"
+    class="relative bg-gradient-to-b from-black to-purple-950/30 py-20"
+  >
+    <div
+      class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
     >
-      <div class="absolute inset-0 bg-[url('/disco-pattern.svg')] opacity-5">
-      </div>
-      <div class="z-10 relative mx-auto px-4 container">
-        <div class="flex items-center mb-12">
-          <div
-            class="flex-1 bg-gradient-to-r from-transparent to-yellow-500 h-px"
-          >
-          </div>
-          <h2
-            class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
-          >
-            <span>BOOK US</span>
-          </h2>
-          <div
-            class="flex-1 bg-gradient-to-l from-transparent to-yellow-500 h-px"
-          >
-          </div>
+    </div>
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
+        <div class="flex-1 bg-gradient-to-r from-transparent to-pink-500 h-px">
         </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>UPCOMING SHOWS</span>
+        </h2>
+        <div class="flex-1 bg-gradient-to-l from-transparent to-pink-500 h-px">
+        </div>
+      </div>
 
-        <div class="gap-8 grid md:grid-cols-2 mx-auto max-w-3xl">
-          <div class="space-y-4">
-            <h3 class="font-bold text-pink-400 text-2xl">
-              Bring the 70s to Your Event
-            </h3>
-            <p class="text-yellow-100">
-              Whether you're planning a corporate event, wedding, birthday
-              party, or festival, we'll bring the authentic sounds and energy of
-              the 70s to make your event unforgettable.
-            </p>
-            <ul class="space-y-2">
-              {
-                [
-                  "Authentic 70s sound and performance",
-                  "Professional sound equipment",
-                  "Customizable setlist",
-                  "Disco lighting available",
-                ].map((item, index) => (
-                  <li class="flex items-center gap-2">
-                    <div class="bg-pink-500 rounded-full w-2 h-2" />
-                    <span>{item}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-          <div
-            class="bg-gradient-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
-          >
-            <form class="space-y-4">
-              <div class="space-y-2">
-                <label class="font-medium text-yellow-200 text-sm">Name</label>
-                <input
-                  type="text"
-                  class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
-                />
+      <div class="space-y-4 mx-auto max-w-3xl">
+        {
+          [
+            {
+              date: "JUN 15",
+              venue: "Disco Palace",
+              location: "New York, NY",
+            },
+            {
+              date: "JUL 04",
+              venue: "Retro Club",
+              location: "Los Angeles, CA",
+            },
+            {
+              date: "AUG 12",
+              venue: "Funk Factory",
+              location: "Chicago, IL",
+            },
+            { date: "SEP 23", venue: "Groove Lounge", location: "Miami, FL" },
+          ].map((show, index) => (
+            <div
+              id={"event-" + index}
+              class="flex sm:flex-row flex-col items-center gap-4 bg-gradient-to-r from-purple-900/30 to-pink-900/20 p-4 border border-pink-500/20 hover:border-pink-500/50 rounded-lg transition-all"
+            >
+              <div class="bg-gradient-to-br from-orange-500 to-pink-600 p-4 rounded-lg min-w-[100px] text-center">
+                <span class="font-bold text-xl">{show.date}</span>
               </div>
-              <div class="space-y-2">
-                <label class="font-medium text-yellow-200 text-sm">Email</label>
-                <input
-                  type="email"
-                  class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
-                />
-              </div>
-              <div class="space-y-2">
-                <label class="font-medium text-yellow-200 text-sm"
-                  >Event Date</label
-                >
-                <input
-                  type="date"
-                  class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full text-white"
-                />
-              </div>
-              <div class="space-y-2">
-                <label class="font-medium text-yellow-200 text-sm"
-                  >Message</label
-                >
-                <textarea
-                  rows={4}
-                  class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
-                ></textarea>
+              <div class="flex-1 sm:text-left text-center">
+                <h3 class="font-bold text-white text-xl">{show.venue}</h3>
+                <p class="text-yellow-200">{show.location}</p>
               </div>
               <a
                 href="#"
-                class="bg-gradient-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
+                class="bg-gradient-to-r from-pink-500 hover:from-pink-600 to-purple-600 hover:to-purple-700 border-0 button"
               >
-                Send Inquiry
+                Get Tickets
               </a>
-            </form>
-          </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="mt-8 text-center">
+        <a
+          href="#"
+          class="hover:bg-yellow-400/10 border-yellow-400 text-yellow-400 button"
+        >
+          View All Shows
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* Donate Section */}
+  <section id="donate" class="relative bg-black py-20">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
+        <div
+          class="flex-1 bg-gradient-to-r from-transparent to-orange-500 h-px"
+        >
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>KEEP THE <br/>GROOVE ALIVE</span>
+        </h2>
+        <div
+          class="flex-1 bg-gradient-to-l from-transparent to-orange-500 h-px"
+        >
         </div>
       </div>
-    </section>
 
-    {/* Footer */}
-    <footer class="bg-black py-8 border-purple-900/50 border-t">
-      <div class="mx-auto px-4 text-center container">
-        <h2
-          class="bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 mb-4 font-bold text-transparent text-3xl fredoka"
-        >
-          GEE YOUR BAND SMELLS TERRIFIC
-        </h2>
-        <p class="text-purple-300/70">
-          © {new Date().getFullYear()} GYBST. All rights reserved.
+      <div
+        class="bg-gradient-to-br from-purple-900/40 to-black mx-auto p-8 border border-purple-500/30 rounded-lg max-w-2xl text-center"
+      >
+        <p class="mb-6 text-yellow-100 text-xl">
+          Your donations support new music,
+          equipment, and bringing our 70s vibes to more venues near you.
         </p>
+        <div
+          class="flex justify-center items-center mx-auto my-2 w-full text-center align-middle"
+        >
+          <a
+            href={details[0].data.link_venmo}
+            target="_blank"
+            rel="noopener"
+            class="bg-gradient-to-r from-orange-500 hover:from-orange-600 to-pink-500 hover:to-pink-600 py-4 border-0 w-full text-white button"
+            title="Donate via Venmo"
+          >
+            Venmo
+          </a>
+        </div>
       </div>
-    </footer>
-  </div>
+    </div>
+  </section>
+
+  {/* Book Us Section */}
+  <section
+    id="book-us"
+    class="relative bg-gradient-to-b from-black to-purple-950/50 py-20"
+  >
+    <div
+      class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
+    >
+    </div>
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
+        <div
+          class="flex-1 bg-gradient-to-r from-transparent to-yellow-500 h-px"
+        >
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>BOOK US</span>
+        </h2>
+        <div
+          class="flex-1 bg-gradient-to-l from-transparent to-yellow-500 h-px"
+        >
+        </div>
+      </div>
+
+      <div class="gap-8 grid md:grid-cols-2 mx-auto max-w-3xl">
+        <div class="space-y-4">
+          <h3 class="font-bold text-pink-400 text-2xl">
+            Bring the 70s to Your Event
+          </h3>
+          <p class="text-yellow-100">
+            Whether you're planning a corporate event, wedding, birthday party,
+            or festival, we'll bring the authentic sounds and energy of the 70s
+            to make your event unforgettable.
+          </p>
+          <ul class="space-y-2">
+            {
+              [
+                "Authentic 70s sound and performance",
+                "Professional sound equipment",
+                "Customizable setlist",
+                "Disco lighting available",
+              ].map((item, index) => (
+                <li
+                  id={"band-features-" + index}
+                  class="flex items-center gap-2"
+                >
+                  <div class="bg-pink-500 rounded-full w-2 h-2" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div
+          class="bg-gradient-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
+        >
+          <form class="space-y-4">
+            <div class="space-y-2">
+              <label class="font-medium text-yellow-200 text-sm">Name</label>
+              <input
+                type="text"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="font-medium text-yellow-200 text-sm">Email</label>
+              <input
+                type="email"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="font-medium text-yellow-200 text-sm"
+                >Event Date</label
+              >
+              <input
+                type="date"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full text-white"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="font-medium text-yellow-200 text-sm">Message</label>
+              <textarea
+                rows={4}
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+              ></textarea>
+            </div>
+            <a
+              href="#"
+              class="bg-gradient-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
+            >
+              Send Inquiry
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

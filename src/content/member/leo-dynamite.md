@@ -5,5 +5,5 @@ adjective: Dancing
 instrument: Vocalist
 bio: ""
 order: 1
-photo: src/assets/images/media/derek.webp
+photo: src/assets/images/media/leo-dynamite.webp
 ---
