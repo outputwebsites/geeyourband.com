@@ -56,7 +56,6 @@ const bgColors = [
           width="350"
           height="350"
           decoding="async"
-          loading="lazy"
           class="bg-transparent drop-shadow"
         />
       </section>
@@ -371,41 +370,49 @@ const bgColors = [
         >
           <form class="space-y-4">
             <div class="space-y-2">
-              <label class="font-medium text-yellow-200 text-sm">Name</label>
+              <label for="name" class="font-medium text-yellow-200 text-sm">Name</label>
               <input
+              name="name"
+                placeholder="Your Name"
                 type="text"
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
-              <label class="font-medium text-yellow-200 text-sm">Email</label>
+              <label for="email" class="font-medium text-yellow-200 text-sm">Email</label>
               <input
+                name="email"
+                placeholder="Your Email"
                 type="email"
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
-              <label class="font-medium text-yellow-200 text-sm"
+              <label for="date" class="font-medium text-yellow-200 text-sm"
                 >Event Date</label
               >
               <input
+                name="date"
                 type="date"
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full text-white"
               />
             </div>
             <div class="space-y-2">
-              <label class="font-medium text-yellow-200 text-sm">Message</label>
+              <label for="message" class="font-medium text-yellow-200 text-sm">Message</label>
               <textarea
+                name="message"
+                placeholder="Tell us about your event"
                 rows={4}
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
               ></textarea>
             </div>
-            <a
-              href="#"
+            <button
+              type="submit"
+              aria-label="Send Inquiry"
               class="bg-gradient-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
             >
               Send Inquiry
-            </a>
+            </button>
           </form>
         </div>
       </div>
