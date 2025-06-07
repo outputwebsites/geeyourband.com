@@ -1,0 +1,84 @@
+---
+import { marked } from "marked";
+import { getCollection } from "astro:content";
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+  const members = await getCollection("member");
+  return members.map((member) => ({
+    params: { member: member.slug },
+    props: { member: member },
+  }));
+}
+
+const { member } = Astro.props;
+const content = await marked.parse(
+  member.data.bio.replace(/\n(?=\n)/g, "\n\n<br/>\n"),
+);
+const bgColors = [
+  "bg-amber-400",
+  "bg-rose-400",
+  "bg-yellow-400",
+  "bg-pink-400",
+  "bg-sky-600",
+  "bg-lime-400",
+];
+---
+
+<BaseLayout
+  title={member.data.name}
+  description={member.data.bio
+    .split(" ")
+    .slice(0, 20)
+    .join(" ")
+    .replace(/[#*_\`]/g, "")
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
+    .trim() + (member.data.bio.split(" ").length > 20 && "...")}
+>
+  <article
+    id="member"
+    class="mx-auto px-3 pt-16 max-[460px]:pt-10 pb-32 max-w-4xl"
+  >
+    {
+      member.data.photo && (
+        <picture>
+          {typeof member.data.photo === "object" ? (
+            <Image
+              src={member.data.photo}
+              alt={member.data.name}
+              width={member.data.photo.width}
+              height={member.data.photo.height}
+              decoding="async"
+              class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+            />
+          ) : (
+            <img
+              src={member.data.photo}
+              alt={member.data.name}
+              decoding="async"
+              class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+            />
+          )}
+        </picture>
+      )
+    }
+
+    <section id="member-details" class="flex flex-col gap-4 mt-8">
+      <div class="p-4 text-center">
+        <h1 class="text-pink-400">
+          <em class="opacity-60 px-1 text-pink-100">
+            {member.data.adjective ? member.data.adjective : ""}
+          </em>
+          <br />
+          <strong>{member.data.name}</strong>
+        </h1>
+        <p class="py-2 text-yellow-200">{member.data.instrument}</p>
+      </div>
+    </section>
+
+    <section id="member-content" class="my-8 overflow-auto">
+      <p set:html={content} />
+    </section>
+  </article>
+</BaseLayout>

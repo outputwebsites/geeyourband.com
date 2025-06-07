@@ -1,0 +1,135 @@
+---
+import { marked } from "marked";
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const events = await getCollection("event");
+  return events.map((event) => ({
+    params: { post: event.slug },
+    props: { post: event },
+  }));
+}
+
+const details = await getCollection("details");
+---
+
+<BaseLayout
+  title={"Book " + details[0].data.name}
+  description={details[0].data.description}
+>
+  {/* Book Us Section */}
+  <section
+    id="book-us"
+    class="relative bg-gradient-to-b from-black to-purple-950/50 py-20"
+  >
+    <!-- <div
+      class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
+    >
+    </div> -->
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
+        <div
+          class="flex-1 bg-gradient-to-r from-transparent to-yellow-500 h-px"
+        >
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>BOOK US</span>
+        </h2>
+        <div
+          class="flex-1 bg-gradient-to-l from-transparent to-yellow-500 h-px"
+        >
+        </div>
+      </div>
+
+      <div class="gap-8 grid md:grid-cols-2 mx-auto max-w-3xl">
+        <div class="space-y-4">
+          <h3 class="font-bold text-pink-400 text-2xl">
+            Bring the 70s to Your Event
+          </h3>
+          <p class="text-yellow-100">
+            Whether you're planning a corporate event, wedding, birthday party,
+            or festival, we'll bring the authentic sounds and energy of the 70s
+            to make your event unforgettable.
+          </p>
+          <ul class="space-y-2">
+            {
+              [
+                "Authentic 70s sound and performance",
+                "Professional sound equipment",
+                "Customizable setlist",
+                "Disco lighting available",
+              ].map((item, index) => (
+                <li
+                  id={"band-features-" + index}
+                  class="flex items-center gap-2"
+                >
+                  <div class="bg-pink-500 rounded-full w-2 h-2" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div
+          class="bg-gradient-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
+        >
+          <form class="space-y-4">
+            <div class="space-y-2">
+              <label for="name" class="font-medium text-yellow-200 text-sm"
+                >Name</label
+              >
+              <input
+                name="name"
+                placeholder="Your Name"
+                type="text"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+              />
+            </div>
+            <div class="space-y-2">
+              <label for="email" class="font-medium text-yellow-200 text-sm"
+                >Email</label
+              >
+              <input
+                name="email"
+                placeholder="Your Email"
+                type="email"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+              />
+            </div>
+            <div class="space-y-2">
+              <label for="date" class="font-medium text-yellow-200 text-sm"
+                >Event Date</label
+              >
+              <input
+                name="date"
+                type="date"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full text-white"
+              />
+            </div>
+            <div class="space-y-2">
+              <label for="message" class="font-medium text-yellow-200 text-sm"
+                >Message</label
+              >
+              <textarea
+                name="message"
+                placeholder="Tell us about your event"
+                rows={4}
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              aria-label="Send Inquiry"
+              class="bg-gradient-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
+            >
+              Send Inquiry
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

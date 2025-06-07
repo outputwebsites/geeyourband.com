@@ -19,14 +19,6 @@ const homepage_content = await marked.parse(
 const members = (await getCollection("member")).sort(
   (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
 );
-const bgColors = [
-  "bg-amber-400",
-  "bg-rose-400",
-  "bg-yellow-400",
-  "bg-pink-400",
-  "bg-sky-600",
-  "bg-lime-400",
-];
 ---
 
 <BaseLayout
@@ -152,39 +144,7 @@ const bgColors = [
       <div class="gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {
           members.map((member, index) => (
-            <div
-              id={"band-member-" + index}
-              class="bg-card bg-gradient-to-b from-purple-900/40 to-black shadow-sm border border-purple-700/50 rounded-lg overflow-hidden text-card-foreground"
-            >
-              <div class="relative aspect-square">
-                <img
-                  src={
-                    typeof member.data.photo === "object" &&
-                    member.data.photo !== null &&
-                    "src" in member.data.photo
-                      ? member.data.photo.src.replace(
-                          /^.*\/src\/assets\//,
-                          "/src/assets/",
-                        )
-                      : "/assets/images/placeholder.png"
-                  }
-                  alt={member.data.name}
-                  class={`${bgColors[index % bgColors.length]} w-full h-full object-cover`}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div class="p-4 text-center">
-                <h3 class="text-pink-400 text-xl">
-                  <em class="opacity-60 px-1 text-pink-100">
-                    {member.data.adjective ? member.data.adjective : ""}
-                  </em>
-                  <br />
-                  <strong>{member.data.name}</strong>
-                </h3>
-                <p class="py-2 text-yellow-200">{member.data.instrument}</p>
-              </div>
-            </div>
+            <CardMember index={index} member={member} />
           ))
         }
       </div>
@@ -278,7 +238,7 @@ const bgColors = [
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
-          <span>KEEP THE <br/>GROOVE ALIVE</span>
+          <span>KEEP THE <br />GROOVE ALIVE</span>
         </h2>
         <div
           class="flex-1 bg-gradient-to-l from-transparent to-orange-500 h-px"
@@ -290,8 +250,8 @@ const bgColors = [
         class="bg-gradient-to-br from-purple-900/40 to-black mx-auto p-8 border border-purple-500/30 rounded-lg max-w-2xl text-center"
       >
         <p class="mb-6 text-yellow-100 text-xl">
-          Your donations support new music,
-          equipment, and bringing our 70s vibes to more venues near you.
+          Your donations support new music, equipment, and bringing our 70s
+          vibes to more venues near you.
         </p>
         <div
           class="flex justify-center items-center mx-auto my-2 w-full text-center align-middle"
@@ -370,16 +330,20 @@ const bgColors = [
         >
           <form class="space-y-4">
             <div class="space-y-2">
-              <label for="name" class="font-medium text-yellow-200 text-sm">Name</label>
+              <label for="name" class="font-medium text-yellow-200 text-sm"
+                >Name</label
+              >
               <input
-              name="name"
+                name="name"
                 placeholder="Your Name"
                 type="text"
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
-              <label for="email" class="font-medium text-yellow-200 text-sm">Email</label>
+              <label for="email" class="font-medium text-yellow-200 text-sm"
+                >Email</label
+              >
               <input
                 name="email"
                 placeholder="Your Email"
@@ -398,7 +362,9 @@ const bgColors = [
               />
             </div>
             <div class="space-y-2">
-              <label for="message" class="font-medium text-yellow-200 text-sm">Message</label>
+              <label for="message" class="font-medium text-yellow-200 text-sm"
+                >Message</label
+              >
               <textarea
                 name="message"
                 placeholder="Tell us about your event"

@@ -1,0 +1,32 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import CardEvent from "@components/CardEvent.astro";
+
+const events = await getCollection("event");
+const details = await getCollection("details");
+---
+
+<BaseLayout title="Events" description={"Events from " + details[0].data.name}>
+  <section id="events" class="flex flex-col gap-4 px-3 pt-20 pb-32 text-center">
+    {events.length === 0 && <h1>No Recent Events</h1>}
+    {
+      events.length >= 1 && (
+        <div class="flex flex-col justify-center items-center gap-8 w-full text-center align-middle">
+          <h1>{events.length > 1 ? "Events" : "Event"}</h1>
+          <div class="justify-center items-start gap-8 grid grid-cols-1 md:grid-cols-2 px-3 max-w-[1400px] text-center">
+            {events
+              .sort(
+                (a, b) =>
+                  new Date(b.data.date).valueOf() -
+                  new Date(a.data.date).valueOf(),
+              )
+              .map((event) => (
+                <CardEvent event={event} />
+              ))}
+          </div>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

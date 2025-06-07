@@ -116,6 +116,127 @@ const details = await getCollection("details");
     <a class="skip" aria-label="skip to main content" href="#main"
       >Click To Skip To Main Content</a
     >
+    {/* Header */}
+    <header
+      id="header"
+      class="top-0 z-50 sticky bg-black py-4 border-purple-900/50 border-b"
+    >
+      <div class="mx-auto px-4 container">
+        <nav
+          id="main-nav"
+          class="flex justify-between items-center text-white align-middle"
+        >
+          <a
+            href="/"
+            title={details[0].data.name}
+            class="font-bold hover:text-yellow-400 text-2xl transition"
+          >
+            {details[0].data.name}
+          </a>
+          <!-- Desktop Navigation -->
+          <ul class="hidden lg:flex gap-6" aria-label="Main navigation">
+            <li>
+              <a
+                href="/events"
+                class="hover:text-yellow-400 transition"
+                title="Events"
+              >
+                Upcoming Shows
+              </a>
+            </li>
+            <li>
+              <a
+                href="/band"
+                class="hover:text-yellow-400 transition"
+                title="Band Members"
+              >
+                Band Members
+              </a>
+            </li>
+            <li>
+              <a
+                href="/book"
+                class="hover:text-yellow-400 transition"
+                title="Book Us"
+              >
+                Book Us
+              </a>
+            </li>
+          </ul>
+
+          <!-- Mobile Navigation -->
+          <div class="lg:hidden relative">
+            <button
+              id="menu-button"
+              aria-label="Open main menu"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+              class="p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              onclick="
+              const menu = document.getElementById('mobile-menu');
+              const btn = document.getElementById('menu-button');
+              const expanded = btn.getAttribute('aria-expanded') === 'true';
+              btn.setAttribute('aria-expanded', !expanded);
+              menu.classList.toggle('hidden');
+              if (!expanded) {
+                menu.querySelector('a')?.focus();
+              }
+              "
+            >
+              <svg
+                class="w-7 h-7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+            <ul
+              id="mobile-menu"
+              class="right-0 z-50 absolute flex flex-col gap-2 bg-black shadow-lg mt-2 py-2 border border-purple-900/50 rounded w-48"
+              role="menu"
+              aria-label="Mobile main navigation"
+              tabindex="-1"
+            >
+              <li role="none">
+                <a
+                  href="/events"
+                  class="block focus:bg-purple-900/20 px-4 py-2 hover:text-yellow-400 transition"
+                  title="Events"
+                  role="menuitem"
+                  tabindex="0">Upcoming Shows</a
+                >
+              </li>
+              <li role="none">
+                <a
+                  href="/band"
+                  class="block focus:bg-purple-900/20 px-4 py-2 hover:text-yellow-400 transition"
+                  title="Band Members"
+                  role="menuitem"
+                  tabindex="0">Band Members</a
+                >
+              </li>
+              <li role="none">
+                <a
+                  href="/book"
+                  class="block focus:bg-purple-900/20 px-4 py-2 hover:text-yellow-400 transition"
+                  title="Book Us"
+                  role="menuitem"
+                  tabindex="0">Book Us</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+
     <main
       id="main"
       role="main"
@@ -133,7 +254,7 @@ const details = await getCollection("details");
         >
           {/* Logo */}
           <div class="flex justify-center items-center">
-            <a title={details[0].data.name} href="#">
+            <a title={details[0].data.name} href="/">
               <img
                 src="/assets/svgs/logo.svg"
                 alt={details[0].data.name}
@@ -187,7 +308,7 @@ const details = await getCollection("details");
             </a>
           </div>
         </section>
-        <p class="text-purple-300/70 text-sm">
+        <p class="text-purple-700/50 text-sm">
           © {new Date().getFullYear()} GYBST. <br />All rights reserved.
         </p>
       </div>
