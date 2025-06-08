@@ -3,6 +3,7 @@ import { marked } from "marked";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CardMember from "@components/CardMember.astro";
 import { getCollection } from "astro:content";
+import CardEvent from "@components/CardEvent.astro";
 
 export async function getStaticPaths() {
   const events = await getCollection("event");
@@ -18,6 +19,11 @@ const homepage_content = await marked.parse(
 );
 const members = (await getCollection("member")).sort(
   (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
+);
+const events = (await getCollection("event")).sort(
+  (a, b) =>
+                  new Date(b.data.date).valueOf() -
+                  new Date(a.data.date).valueOf(),
 );
 ---
 
@@ -175,49 +181,15 @@ const members = (await getCollection("member")).sort(
 
       <div class="space-y-5 mx-auto max-w-3xl">
         {
-          [
-            {
-              date: "JUN 15",
-              venue: "Disco Palace",
-              location: "New York, NY",
-            },
-            {
-              date: "JUL 04",
-              venue: "Retro Club",
-              location: "Los Angeles, CA",
-            },
-            {
-              date: "AUG 12",
-              venue: "Funk Factory",
-              location: "Chicago, IL",
-            },
-            { date: "SEP 23", venue: "Groove Lounge", location: "Miami, FL" },
-          ].map((show, index) => (
-            <div
-              id={"event-" + index}
-              class="flex sm:flex-row flex-col items-center gap-8 bg-gradient-to-r from-purple-900/30 to-pink-900/20 p-4 border border-pink-500/20 hover:border-pink-500/50 rounded-lg transition-all"
-            >
-              <div class="bg-gradient-to-br from-orange-500 to-pink-600 p-4 rounded-lg w-full min-w-[100px] font-bold text-xl text-center">
-                {show.date}
-              </div>
-              <div class="flex-1 sm:text-left text-center">
-                <h3 class="font-bold text-white text-xl">{show.venue}</h3>
-                <p class="text-yellow-200">{show.location}</p>
-              </div>
-              <a
-                href="#"
-                class="bg-gradient-to-r from-pink-500 hover:from-pink-600 to-purple-600 hover:to-purple-700 border-0 button"
-              >
-                Get Tickets
-              </a>
-            </div>
+          events.map((event, index) => (
+            <CardEvent event={event} index={index} />
           ))
         }
       </div>
 
       <div class="mt-8 text-center">
         <a
-          href="#"
+          href="/events"
           class="bg-yellow-400/10 hover:bg-yellow-400/30 border-yellow-400 text-yellow-400 button"
         >
           View All Shows

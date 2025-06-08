@@ -21,8 +21,8 @@ const details = await getCollection("details");
                   new Date(b.data.date).valueOf() -
                   new Date(a.data.date).valueOf(),
               )
-              .map((event) => (
-                <CardEvent event={event} />
+              .map((event, index) => (
+                <CardEvent event={event} index={index} />
               ))}
           </div>
         </div>

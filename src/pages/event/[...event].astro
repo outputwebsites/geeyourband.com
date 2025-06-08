@@ -57,7 +57,7 @@ const members = (await getEntries(event.data.member)).filter(member => member.co
               {formatDate(event.data.date)} by
               {members.length === 1 ? (
                 <a
-                  href={"/band/#" + members[0].data.name}
+                  href={"/" + members[0].slug}
                   title={members[0].data.name}
                 >
                   <span
@@ -68,13 +68,13 @@ const members = (await getEntries(event.data.member)).filter(member => member.co
                 </a>
               ) : members.length === 2 ? (
                 <a
-                  href={"/band/#" + members[0].data.name}
+                  href={"/" + members[0].slug}
                   title={members[0].data.name}
                 >
                   <span
                     id={members[0].data.name + "-name"}
                   ><strong>{members[0].data.name}</strong></span></a> <span>and</span> <a
-                  href={"/band/#" + members[1].data.name}
+                  href={"/" + members[1].slug}
                   title={members[1].data.name}
                 >
                   <span
@@ -84,14 +84,14 @@ const members = (await getEntries(event.data.member)).filter(member => member.co
                   </span>
                 </a>
               ) : (
-                members.map((author, index) => (
+                members.map((member, index) => (
                   <span>
                   <a
-                    href={"/band#" + author.data.name}
-                    title={author.data.name}
+                    href={"/" + member.slug}
+                    title={member.data.name}
                   ><span
-                    id={author.data.name + "-name"}
-                    ><strong>{author.data.name}</strong></span></a>
+                    id={member.data.name + "-name"}
+                    ><strong>{member.data.name}</strong></span></a>
                   {index < members.length - 2 && ", "}
                   {index === members.length - 2 && ", and "}
                   </span>

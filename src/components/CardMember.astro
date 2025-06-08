@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 
 export interface Props {
   index: number;
@@ -18,22 +19,37 @@ const bgColors = [
 ];
 ---
 
-<div
+<a
+      href={member.slug}
+      title={member.data.name}
   id={"band-member-" + index}
-  class="bg-card bg-gradient-to-b from-purple-900/40 to-black shadow-sm border border-purple-700/50 rounded-lg overflow-hidden text-card-foreground"
+  class="group block no-underline hover:no-underline hover:scale-105 transition-transform transform"
 >
+  <div class="bg-card bg-gradient-to-b from-purple-900/40 to-black shadow-sm border border-purple-700/50 rounded-lg overflow-hidden text-card-foreground">
   <div class="relative aspect-square">
-    <img
-      src={typeof member.data.photo === "object" &&
-      member.data.photo !== null &&
-      "src" in member.data.photo
-        ? member.data.photo.src.replace(/^.*\/src\/assets\//, "/src/assets/")
-        : "/assets/images/placeholder.png"}
-      alt={member.data.name}
-      class={`${bgColors[index % bgColors.length]} w-full h-full object-cover`}
-      loading="lazy"
-      decoding="async"
-    />
+    {
+      member.data.photo && (
+        <picture>
+          {typeof member.data.photo === "object" ? (
+            <Image
+              src={member.data.photo}
+              alt={member.data.name}
+              width={member.data.photo.width}
+              height={member.data.photo.height}
+              decoding="async"
+              class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-t-lg`}
+            />
+          ) : (
+            <img
+              src={member.data.photo}
+              alt={member.data.name}
+              decoding="async"
+              class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-t-lg`}
+            />
+          )}
+        </picture>
+      )
+    }
   </div>
   <div class="p-4 text-center">
     <h3 class="text-pink-400 text-xl">
@@ -46,3 +62,4 @@ const bgColors = [
     <p class="py-2 text-yellow-200">{member.data.instrument}</p>
   </div>
 </div>
+</a>
