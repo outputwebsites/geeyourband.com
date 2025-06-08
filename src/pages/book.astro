@@ -21,7 +21,7 @@ const details = await getCollection("details");
   {/* Book Us Section */}
   <section
     id="book-us"
-    class="relative bg-gradient-to-b from-black to-purple-950/50 py-20"
+    class="relative bg-linear-to-b from-black to-purple-950/50 py-20"
   >
     <!-- <div
       class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
@@ -30,7 +30,7 @@ const details = await getCollection("details");
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
         <div
-          class="flex-1 bg-gradient-to-r from-transparent to-yellow-500 h-px"
+          class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px"
         >
         </div>
         <h2
@@ -39,7 +39,7 @@ const details = await getCollection("details");
           <span>BOOK US</span>
         </h2>
         <div
-          class="flex-1 bg-gradient-to-l from-transparent to-yellow-500 h-px"
+          class="flex-1 bg-linear-to-l from-transparent to-yellow-500 h-px"
         >
         </div>
       </div>
@@ -74,7 +74,7 @@ const details = await getCollection("details");
           </ul>
         </div>
         <div
-          class="bg-gradient-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
+          class="bg-linear-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
         >
           <form class="space-y-4">
             <div class="space-y-2">
@@ -85,7 +85,7 @@ const details = await getCollection("details");
                 name="name"
                 placeholder="Your Name"
                 type="text"
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
@@ -96,7 +96,7 @@ const details = await getCollection("details");
                 name="email"
                 placeholder="Your Email"
                 type="email"
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
@@ -106,7 +106,7 @@ const details = await getCollection("details");
               <input
                 name="date"
                 type="date"
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full text-white"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full text-white"
               />
             </div>
             <div class="space-y-2">
@@ -117,13 +117,13 @@ const details = await getCollection("details");
                 name="message"
                 placeholder="Tell us about your event"
                 rows={4}
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               ></textarea>
             </div>
             <button
               type="submit"
               aria-label="Send Inquiry"
-              class="bg-gradient-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
+              class="bg-linear-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
             >
               Send Inquiry
             </button>

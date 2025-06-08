@@ -17,7 +17,7 @@ const { event, index } = Astro.props;
   class="group block no-underline hover:no-underline hover:scale-105 transition-transform transform"
 >
 <div
-  class="flex flex-col items-center gap-6 bg-gradient-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl p-6 border border-pink-400/30 hover:border-pink-400/70 rounded-xl transition-all duration-300"
+  class="flex flex-col items-center gap-6 bg-linear-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl p-6 border border-pink-400/30 hover:border-pink-400/70 rounded-xl transition-all duration-300"
 >
   <div class="flex min-[690px]:flex-row flex-col items-center gap-2 px-3 w-full">
   <div class="flex flex-col items-center gap-2 w-full">
@@ -29,7 +29,7 @@ const { event, index } = Astro.props;
           day: "numeric",
         })}
       </span>
-      <span class="bg-pink-700/80 shadow px-3 py-1 rounded-full font-bold text-white text-lg">
+      <span class="bg-pink-700/80 shadow-sm px-3 py-1 rounded-full font-bold text-white text-lg">
         {new Date(event.data.date).toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "2-digit",

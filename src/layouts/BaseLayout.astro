@@ -171,7 +171,9 @@ const details = await getCollection("details");
         aria-label="Open main menu"
         aria-controls="mobile-menu"
         aria-expanded="false"
-        class="p-2 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400"
+        class="p-2 rounded-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white hover:text-yellow-400 transition cursor-pointer"
+        title="Open main menu"
+        type="button"
         onclick="
         const menu = document.getElementById('mobile-menu');
         const btn = document.getElementById('menu-button');
@@ -199,7 +201,7 @@ const details = await getCollection("details");
       </button>
       <ul
         id="mobile-menu"
-        class="hidden right-0 z-50 absolute flex flex-col gap-2 bg-black shadow-lg mt-2 py-2 border border-purple-900/50 rounded w-48"
+        class="hidden right-0 z-50 absolute flex flex-col gap-2 bg-black shadow-lg mt-2 py-2 border border-purple-900/50 rounded-sm w-48"
         role="menu"
         aria-label="Mobile main navigation"
         tabindex="-1"
@@ -279,7 +281,7 @@ const details = await getCollection("details");
                 height="350"
                 decoding="async"
                 loading="lazy"
-                class="bg-transparent drop-shadow"
+                class="bg-transparent drop-shadow-sm"
               />
             </a>
           </div>
@@ -301,7 +303,7 @@ const details = await getCollection("details");
                 height="50"
                 decoding="async"
                 loading="lazy"
-                class="bg-transparent drop-shadow"
+                class="bg-transparent drop-shadow-sm"
               />
               Facebook
             </a>
@@ -319,7 +321,7 @@ const details = await getCollection("details");
                 height="50"
                 decoding="async"
                 loading="lazy"
-                class="bg-transparent drop-shadow"
+                class="bg-transparent drop-shadow-sm"
               />
               Instagram
             </a>

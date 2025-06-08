@@ -27,7 +27,7 @@ const events = (await getCollection("event")).sort(
   <section class="relative flex justify-center items-center h-screen">
     <div class="z-0 absolute inset-0 animate-move-up">
       <div
-        class="z-10 absolute inset-0 bg-gradient-to-b from-purple-900/70 to-black/90"
+        class="z-10 absolute inset-0 bg-linear-to-b from-purple-900/70 to-black/90"
       >
       </div>
       <div
@@ -46,24 +46,24 @@ const events = (await getCollection("event")).sort(
           width="350"
           height="350"
           decoding="async"
-          class="bg-transparent drop-shadow"
+          class="bg-transparent drop-shadow-sm"
         />
       </section>
       <h1
-        class="bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 mx-auto mb-6 pb-1 max-w-[362px] md:max-w-[736px] font-extrabold text-transparent text-3xl md:text-5xl"
+        class="bg-clip-text bg-linear-to-r from-orange-400 via-pink-500 to-purple-600 mx-auto mb-6 pb-1 max-w-[362px] md:max-w-[736px] font-extrabold text-transparent text-3xl md:text-5xl"
       >
         {details[0].data.description}
       </h1>
       <div class="flex flex-wrap justify-center gap-4">
         <a
           href="#upcoming-shows"
-          class="bg-gradient-to-r from-purple-500 hover:from-purple-600 to-pink-500 hover:to-pink-600 border-0 text-white button"
+          class="bg-linear-to-r from-purple-500 hover:from-purple-600 to-pink-500 hover:to-pink-600 border-0 text-white button"
         >
           Upcoming Shows
         </a>
         <a
           href="#book-us"
-          class="bg-gradient-to-r from-pink-500 hover:from-pink-600 to-orange-500 hover:to-orange-600 border-0 text-white button"
+          class="bg-linear-to-r from-pink-500 hover:from-pink-600 to-orange-500 hover:to-orange-600 border-0 text-white button"
         >
           Book Us
         </a>
@@ -96,7 +96,7 @@ const events = (await getCollection("event")).sort(
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
         <div
-          class="flex-1 bg-gradient-to-r from-transparent to-purple-500 h-px"
+          class="flex-1 bg-linear-to-r from-transparent to-purple-500 h-px"
         >
         </div>
         <h2
@@ -105,7 +105,7 @@ const events = (await getCollection("event")).sort(
           <span>THE SKINNY</span>
         </h2>
         <div
-          class="flex-1 bg-gradient-to-l from-transparent to-purple-500 h-px"
+          class="flex-1 bg-linear-to-l from-transparent to-purple-500 h-px"
         >
         </div>
       </div>
@@ -125,7 +125,7 @@ const events = (await getCollection("event")).sort(
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
         <div
-          class="flex-1 bg-gradient-to-r from-transparent to-purple-500 h-px"
+          class="flex-1 bg-linear-to-r from-transparent to-purple-500 h-px"
         >
         </div>
         <h2
@@ -134,7 +134,7 @@ const events = (await getCollection("event")).sort(
           <span>MEET THE BAND</span>
         </h2>
         <div
-          class="flex-1 bg-gradient-to-l from-transparent to-purple-500 h-px"
+          class="flex-1 bg-linear-to-l from-transparent to-purple-500 h-px"
         >
         </div>
       </div>
@@ -152,7 +152,7 @@ const events = (await getCollection("event")).sort(
   {/* Upcoming Shows Section */}
   <section
     id="upcoming-shows"
-    class="relative bg-gradient-to-b from-black to-purple-950/30 py-20"
+    class="relative bg-linear-to-b from-black to-purple-950/30 py-20"
   >
     <div
       class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
@@ -160,17 +160,17 @@ const events = (await getCollection("event")).sort(
     </div>
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
-        <div class="flex-1 bg-gradient-to-r from-transparent to-pink-500 h-px">
+        <div class="flex-1 bg-linear-to-r from-transparent to-pink-500 h-px">
         </div>
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
           <span>{events.length > 1 ? "UPCOMING SHOWS" : "UPCOMING SHOW"}</span>
         </h2>
-        <div class="flex-1 bg-gradient-to-l from-transparent to-pink-500 h-px">
+        <div class="flex-1 bg-linear-to-l from-transparent to-pink-500 h-px">
         </div>
       </div>
-            <div class="flex flex-col justify-center items-stretch gap-16 px-3 max-w-[1400px] overflow-hidden text-center">
+            <div class="flex flex-col justify-center items-stretch gap-16 px-10 py-3 w-full max-w-[1400px] overflow-hidden text-center">
         {
           events.slice(0, 6).map((event, index) => (
             <CardEvent event={event} index={index} />
@@ -178,14 +178,16 @@ const events = (await getCollection("event")).sort(
         }
       </div>
 
-      <div class="mt-8 text-center">
-        <a
-          href="/events"
-          class="bg-yellow-400/10 hover:bg-yellow-400/30 border-yellow-400 text-yellow-400 button"
-        >
-          View All Shows
-        </a>
-      </div>
+      {events.length > 6 && (
+        <div class="mt-8 text-center">
+          <a
+        href="/events"
+        class="bg-yellow-400/10 hover:bg-yellow-400/30 border-yellow-400 text-yellow-400 button"
+          >
+        View All Shows
+          </a>
+        </div>
+      )}
     </div>
   </section>
 
@@ -195,7 +197,7 @@ const events = (await getCollection("event")).sort(
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
         <div
-          class="flex-1 bg-gradient-to-r from-transparent to-orange-500 h-px"
+          class="flex-1 bg-linear-to-r from-transparent to-orange-500 h-px"
         >
         </div>
         <h2
@@ -204,13 +206,13 @@ const events = (await getCollection("event")).sort(
           <span>KEEP THE <br />GROOVE ALIVE</span>
         </h2>
         <div
-          class="flex-1 bg-gradient-to-l from-transparent to-orange-500 h-px"
+          class="flex-1 bg-linear-to-l from-transparent to-orange-500 h-px"
         >
         </div>
       </div>
 
       <div
-        class="bg-gradient-to-br from-purple-900/40 to-black mx-auto p-8 border border-purple-500/30 rounded-lg max-w-2xl text-center"
+        class="bg-linear-to-br from-purple-900/40 to-black mx-auto p-8 border border-purple-500/30 rounded-lg max-w-2xl text-center"
       >
         <p class="mb-6 text-yellow-100 text-xl">
           Your donations support new music, equipment, and bringing our 70s
@@ -223,7 +225,7 @@ const events = (await getCollection("event")).sort(
             href={details[0].data.link_venmo}
             target="_blank"
             rel="noopener"
-            class="bg-gradient-to-r from-orange-500 hover:from-orange-600 to-pink-500 hover:to-pink-600 py-4 border-0 w-full text-white button"
+            class="bg-linear-to-r from-orange-500 hover:from-orange-600 to-pink-500 hover:to-pink-600 py-4 border-0 w-full text-white button"
             title="Donate via Venmo"
           >
             Venmo
@@ -236,7 +238,7 @@ const events = (await getCollection("event")).sort(
   {/* Book Us Section */}
   <section
     id="book-us"
-    class="relative bg-gradient-to-b from-black to-purple-950/50 py-20"
+    class="relative bg-linear-to-b from-black to-purple-950/50 py-20"
   >
     <div
       class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
@@ -245,7 +247,7 @@ const events = (await getCollection("event")).sort(
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
         <div
-          class="flex-1 bg-gradient-to-r from-transparent to-yellow-500 h-px"
+          class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px"
         >
         </div>
         <h2
@@ -254,7 +256,7 @@ const events = (await getCollection("event")).sort(
           <span>BOOK US</span>
         </h2>
         <div
-          class="flex-1 bg-gradient-to-l from-transparent to-yellow-500 h-px"
+          class="flex-1 bg-linear-to-l from-transparent to-yellow-500 h-px"
         >
         </div>
       </div>
@@ -289,7 +291,7 @@ const events = (await getCollection("event")).sort(
           </ul>
         </div>
         <div
-          class="bg-gradient-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
+          class="bg-linear-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
         >
           <form class="space-y-4">
             <div class="space-y-2">
@@ -300,7 +302,7 @@ const events = (await getCollection("event")).sort(
                 name="name"
                 placeholder="Your Name"
                 type="text"
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
@@ -311,7 +313,7 @@ const events = (await getCollection("event")).sort(
                 name="email"
                 placeholder="Your Email"
                 type="email"
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               />
             </div>
             <div class="space-y-2">
@@ -321,7 +323,7 @@ const events = (await getCollection("event")).sort(
               <input
                 name="date"
                 type="date"
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full text-white"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full text-white"
               />
             </div>
             <div class="space-y-2">
@@ -332,13 +334,13 @@ const events = (await getCollection("event")).sort(
                 name="message"
                 placeholder="Tell us about your event"
                 rows={4}
-                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500 w-full"
+                class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               ></textarea>
             </div>
             <button
               type="submit"
               aria-label="Send Inquiry"
-              class="bg-gradient-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
+              class="bg-linear-to-r from-yellow-500 hover:from-yellow-600 to-orange-500 hover:to-orange-600 w-full font-bold text-black button"
             >
               Send Inquiry
             </button>
