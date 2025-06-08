@@ -5,14 +5,6 @@ import CardMember from "@components/CardMember.astro";
 import { getCollection } from "astro:content";
 import CardEvent from "@components/CardEvent.astro";
 
-export async function getStaticPaths() {
-  const events = await getCollection("event");
-  return events.map((event) => ({
-    params: { post: event.slug },
-    props: { post: event },
-  }));
-}
-
 const details = await getCollection("details");
 const homepage_content = await marked.parse(
   details[0].data.homepage_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
@@ -22,8 +14,8 @@ const members = (await getCollection("member")).sort(
 );
 const events = (await getCollection("event")).sort(
   (a, b) =>
-                  new Date(b.data.date).valueOf() -
-                  new Date(a.data.date).valueOf(),
+                  new Date(a.data.date).valueOf() -
+                  new Date(b.data.date).valueOf(),
 );
 ---
 
@@ -80,7 +72,7 @@ const events = (await getCollection("event")).sort(
     <div
       class="right-0 bottom-8 left-0 absolute flex justify-center animate-bounce arrow-continue"
     >
-      <a href="#content" class="text-yellow-400 hover:text-yellow-500">
+      <a href="#content" class="text-yellow-400 hover:text-yellow-500 hover:scale-125 transition-transform transform">
         <svg
           width="24"
           height="24"
@@ -173,15 +165,14 @@ const events = (await getCollection("event")).sort(
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
-          <span>UPCOMING SHOWS</span>
+          <span>{events.length > 1 ? "UPCOMING SHOWS" : "UPCOMING SHOW"}</span>
         </h2>
         <div class="flex-1 bg-gradient-to-l from-transparent to-pink-500 h-px">
         </div>
       </div>
-
-      <div class="space-y-5 mx-auto max-w-3xl">
+            <div class="flex flex-col justify-center items-stretch gap-16 px-3 max-w-[1400px] overflow-hidden text-center">
         {
-          events.map((event, index) => (
+          events.slice(0, 6).map((event, index) => (
             <CardEvent event={event} index={index} />
           ))
         }

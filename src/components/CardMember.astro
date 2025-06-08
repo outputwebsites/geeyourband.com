@@ -25,7 +25,9 @@ const bgColors = [
   id={"band-member-" + index}
   class="group block no-underline hover:no-underline hover:scale-105 transition-transform transform"
 >
-  <div class="bg-card bg-gradient-to-b from-purple-900/40 to-black shadow-sm border border-purple-700/50 rounded-lg overflow-hidden text-card-foreground">
+  <div
+  class="flex flex-col items-center gap-2 bg-gradient-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl border border-pink-400/30 hover:border-pink-400/70 rounded-xl transition-all duration-300"
+  >
   <div class="relative aspect-square">
     {
       member.data.photo && (
