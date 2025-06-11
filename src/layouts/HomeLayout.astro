@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import { ClientRouter } from "astro:transitions";
-import NavBar from "@components/NavBar.astro";
 import "@fontsource-variable/geologica";
 import geologicaWoff2 from "@fontsource-variable/geologica/files/geologica-latin-wght-normal.woff2?url";
 import "@fontsource-variable/fredoka";
@@ -117,7 +116,6 @@ const details = await getCollection("details");
     <a class="skip" aria-label="skip to main content" href="#main"
       >Click To Skip To Main Content</a
     >
-    <NavBar/>
 
     <main
       id="main"

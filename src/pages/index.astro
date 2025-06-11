@@ -1,6 +1,6 @@
 ---
 import { marked } from "marked";
-import BaseLayout from "src/layouts/BaseLayout.astro";
+import HomeLayout from "src/layouts/HomeLayout.astro";
 import CardMember from "@components/CardMember.astro";
 import { getCollection } from "astro:content";
 import CardEvent from "@components/CardEvent.astro";
@@ -19,7 +19,7 @@ const events = (await getCollection("event")).sort(
 );
 ---
 
-<BaseLayout
+<HomeLayout
   title={details[0].data.name}
   description={details[0].data.description}
 >
@@ -351,4 +351,4 @@ const events = (await getCollection("event")).sort(
       </div>
     </div>
   </section>
-</BaseLayout>
+</HomeLayout>
