@@ -1,27 +1,21 @@
 ---
-import { marked } from "marked";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-
-export async function getStaticPaths() {
-  const events = await getCollection("event");
-  return events.map((event) => ({
-    params: { post: event.slug },
-    props: { post: event },
-  }));
-}
 
 const details = await getCollection("details");
 ---
 
 <BaseLayout
   title={"Book " + details[0].data.name}
-  description={details[0].data.description}
+  description={"Book " +
+    details[0].data.name +
+    " - " +
+    details[0].data.description}
 >
   {/* Book Us Section */}
   <section
     id="book-us"
-    class="relative bg-linear-to-b from-black to-purple-950/50 py-20"
+    class="relative bg-linear-to-b from-black to-purple-950/50 pt-20 pb-32"
   >
     <!-- <div
       class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
@@ -29,30 +23,26 @@ const details = await getCollection("details");
     </div> -->
     <div class="z-10 relative mx-auto px-4 container">
       <div class="flex items-center mb-12">
-        <div
-          class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px"
-        >
+        <div class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px">
         </div>
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
           <span>BOOK US</span>
         </h2>
-        <div
-          class="flex-1 bg-linear-to-l from-transparent to-yellow-500 h-px"
-        >
+        <div class="flex-1 bg-linear-to-l from-transparent to-yellow-500 h-px">
         </div>
       </div>
 
       <div class="gap-8 grid md:grid-cols-2 mx-auto max-w-3xl">
         <div class="space-y-4">
           <h3 class="font-bold text-pink-400 text-2xl">
-            Bring the 70s to Your Event
+            Bring the 70s to Your Show
           </h3>
           <p class="text-yellow-100">
-            Whether you're planning a corporate event, wedding, birthday party,
+            Whether you're planning a corporate show, wedding, birthday party,
             or festival, we'll bring the authentic sounds and energy of the 70s
-            to make your event unforgettable.
+            to make your show unforgettable.
           </p>
           <ul class="space-y-2">
             {
@@ -101,7 +91,7 @@ const details = await getCollection("details");
             </div>
             <div class="space-y-2">
               <label for="date" class="font-medium text-yellow-200 text-sm"
-                >Event Date</label
+                >Show Date</label
               >
               <input
                 name="date"
@@ -115,7 +105,7 @@ const details = await getCollection("details");
               >
               <textarea
                 name="message"
-                placeholder="Tell us about your event"
+                placeholder="Tell us about your show"
                 rows={4}
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full"
               ></textarea>

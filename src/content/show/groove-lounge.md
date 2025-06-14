@@ -9,7 +9,7 @@ member:
   - leo-dynamite
 image: src/assets/images/media/wallpaper-2.webp
 imageAlt: Wallpaper
-date: 2025-06-15T22:00:00.000Z
+date: 2025-06-13T18:00:00.000Z
 ---
 ## Lacerans aliter tetigit praeterea rite
 

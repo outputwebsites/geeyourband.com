@@ -23,7 +23,7 @@ const detailsCollection = defineCollection({
 		}),
 });
 
-const eventsCollection = defineCollection({
+const showsCollection = defineCollection({
 	type: "content",
 	schema: ({ image }) =>
 		z.object({
@@ -52,6 +52,6 @@ const membersCollection = defineCollection({
 
 export const collections = {
 	details: detailsCollection,
-	event: eventsCollection,
+	show: showsCollection,
 	member: membersCollection,
 };

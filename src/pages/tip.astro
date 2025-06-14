@@ -1,0 +1,62 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const details = await getCollection("details");
+---
+
+<BaseLayout
+  title={"Leave a tip for " + details[0].data.name}
+  description={"Leave a tip for " +
+    details[0].data.name +
+    " - " +
+    details[0].data.description}
+>
+  {/* Donate Section */}
+  <section id="donate" class="relative bg-black pt-20 pb-32">
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="z-10 relative mx-auto px-4 container">
+      <div class="flex items-center mb-12">
+        <div class="flex-1 bg-linear-to-r from-transparent to-orange-500 h-px">
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>KEEP THE <br />GROOVE ALIVE</span>
+        </h2>
+        <div class="flex-1 bg-linear-to-l from-transparent to-orange-500 h-px">
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col gap-10 bg-linear-to-br from-purple-900/40 to-black mx-auto px-3 py-12 border border-purple-500/30 rounded-lg max-w-2xl text-center"
+      >
+        <p class="mx-auto max-w-96 text-blue-400 text-xl">
+          Your tip supports new music, equipment, and bringing our 70s vibes to
+          more venues near you.
+        </p>
+        <div
+          class="flex flex-col justify-center items-center mx-auto w-full text-center align-middle"
+        >
+          <a
+            href={details[0].data.link_venmo}
+            target="_blank"
+            rel="noopener"
+            title="Leave a tip using Venmo"
+            class="bg-[#0c122c] px-10 py-6 border border-blue-400/40 hover:border-blue-300 button"
+          >
+            <img
+              src="/assets/svgs/venmo.svg"
+              alt="Venmo"
+              width={194}
+              height={36}
+              loading="lazy"
+              class="bg-[#0c122c] text-white text-2xl"
+              decoding="async"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

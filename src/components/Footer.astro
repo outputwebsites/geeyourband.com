@@ -1,0 +1,122 @@
+---
+import { getCollection } from "astro:content";
+const details = await getCollection("details");
+const footerLinks = [
+  { href: "/shows", title: "Upcoming Shows" },
+  { href: "/band", title: "Band Members" },
+  { href: "/tip", title: "Leave a Tip" },
+  { href: "/book", title: "Book Us" },
+];
+---
+
+{/* Footer */}
+<footer id="footer" class="bg-purple-900/20 py-8 border-purple-900/50 border-t">
+  <div
+    class="flex flex-col justify-center items-center gap-20 mx-auto px-4 text-center container"
+  >
+    <section
+      id="footer-logo-social"
+      class="flex md:flex-row flex-col justify-center items-center gap-6 md:gap-12 text-center align-middle"
+    >
+      {/* Logo */}
+      <div class="flex justify-center items-center">
+        <a title={details[0].data.name} href="/">
+          <img
+            src="/assets/svgs/logo.svg"
+            alt={details[0].data.name}
+            width={350}
+            height={350}
+            decoding="async"
+            loading="lazy"
+            class="bg-transparent drop-shadow-sm"
+          />
+        </a>
+      </div>
+      {/* Social Media */}
+      <div
+        class="flex md:flex-col flex-wrap justify-center items-center gap-12"
+      >
+        <a
+          href={details[0].data.link_facebook}
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+          class="flex items-center gap-2 hover:text-yellow-400 transition"
+        >
+          <img
+            src="/assets/svgs/facebook.svg"
+            alt="Facebook"
+            width={50}
+            height={50}
+            decoding="async"
+            loading="lazy"
+            class="bg-transparent drop-shadow-sm"
+          />
+          Facebook
+        </a>
+        <a
+          href={details[0].data.link_instagram}
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+          class="flex items-center gap-2 hover:text-yellow-400 transition"
+        >
+          <img
+            src="/assets/svgs/instagram.svg"
+            alt="Instagram"
+            width={50}
+            height={50}
+            decoding="async"
+            loading="lazy"
+            class="bg-transparent drop-shadow-sm"
+          />
+          Instagram
+        </a>
+      </div>
+    </section>
+    <section
+      id="footer-links"
+      class="flex sm:flex-row flex-col justify-center items-center gap-12 text-center align-middle"
+    >
+      {
+        footerLinks.map((link) => (
+          <a
+            href={link.href}
+            class="hover:text-yellow-400 text-base md:text-lg transition"
+            title={link.title}
+          >
+            {link.title}
+          </a>
+        ))
+      }
+    </section>
+    <section
+      id="tip"
+      class="flex flex-col justify-center items-center gap-3 text-center align-middle"
+    >
+      <p class="text-blue-400 text-lg">
+        Love what we do? <br />Support us with a tip!
+      </p>
+      <a
+        href={details[0].data.link_venmo}
+        target="_blank"
+        rel="noopener"
+        title="Leave a tip using Venmo"
+        class="bg-[#0c122c] px-10 py-6 border border-blue-400/40 hover:border-blue-300 button"
+      >
+        <img
+          src="/assets/svgs/venmo.svg"
+          alt="Venmo"
+          width={194}
+          height={36}
+          loading="lazy"
+          class="bg-[#0c122c] text-white text-2xl"
+          decoding="async"
+        />
+      </a>
+    </section>
+    <p class="text-purple-700/50 text-sm">
+      © {new Date().getFullYear()} GYBST. <br />All rights reserved.
+    </p>
+  </div>
+</footer>

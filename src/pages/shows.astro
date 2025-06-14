@@ -1,0 +1,36 @@
+---
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import CardShow from "@components/CardShow.astro";
+
+const details = await getCollection("details");
+const shows = (await getCollection("show"))
+  .filter((show) => new Date(show.data.date) >= new Date())
+  .sort(
+    (a, b) => new Date(a.data.date).valueOf() - new Date(b.data.date).valueOf(),
+  );
+---
+
+<BaseLayout
+  title="Upcoming Shows"
+  description={"Upcoming Shows from " +
+    details[0].data.name +
+    " - " +
+    details[0].data.description}
+>
+  <section id="shows" class="flex flex-col gap-4 px-3 pt-20 pb-32 text-center">
+    {shows.length === 0 && <h1>No Upcoming Shows</h1>}
+    {
+      shows.length >= 1 && (
+        <div class="flex flex-col justify-center items-center gap-8 w-full text-center align-middle">
+          <h1>Upcoming {shows.length > 1 ? "Shows" : "Show"}</h1>
+          <div class="flex flex-col justify-center items-stretch gap-16 px-10 py-3 w-full max-w-[1400px] overflow-hidden text-center">
+            {shows.map((show, index) => (
+              <CardShow show={show} index={index} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

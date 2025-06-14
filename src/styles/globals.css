@@ -15,6 +15,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -48,14 +49,12 @@
 
 @utility rainbow-text {
   /* Rainbow Text and Border */
-  background: linear-gradient(
-    to right,
-    #ff3d00,
-    #ffea00,
-    #00e676,
-    #2979ff,
-    #d500f9
-  );
+  background: linear-gradient(to right,
+      #ff3d00,
+      #ffea00,
+      #00e676,
+      #2979ff,
+      #d500f9);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -63,40 +62,34 @@
 }
 
 @utility rainbow-border {
-  background: linear-gradient(
-    45deg,
-    #ff3d00,
-    #ffea00,
-    #00e676,
-    #2979ff,
-    #d500f9,
-    #ff3d00
-  );
+  background: linear-gradient(45deg,
+      #ff3d00,
+      #ffea00,
+      #00e676,
+      #2979ff,
+      #d500f9,
+      #ff3d00);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
 @utility rainbow-border-top {
   height: 4px;
-  background: linear-gradient(
-    to right,
-    #ff3d00,
-    #ffea00,
-    #00e676,
-    #2979ff,
-    #d500f9
-  );
+  background: linear-gradient(to right,
+      #ff3d00,
+      #ffea00,
+      #00e676,
+      #2979ff,
+      #d500f9);
 }
 
 @utility retro-button {
-  background: linear-gradient(
-    45deg,
-    #ff3d00,
-    #ffea00,
-    #00e676,
-    #2979ff,
-    #d500f9
-  );
+  background: linear-gradient(45deg,
+      #ff3d00,
+      #ffea00,
+      #00e676,
+      #2979ff,
+      #d500f9);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   border: none;
@@ -115,14 +108,12 @@
 }
 
 @utility retro-button-small {
-  background: linear-gradient(
-    45deg,
-    #ff3d00,
-    #ffea00,
-    #00e676,
-    #2979ff,
-    #d500f9
-  );
+  background: linear-gradient(45deg,
+      #ff3d00,
+      #ffea00,
+      #00e676,
+      #2979ff,
+      #d500f9);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
   border: none;
@@ -149,14 +140,12 @@
     right: -5px;
     bottom: -5px;
     z-index: -1;
-    background: linear-gradient(
-      45deg,
-      #ff3d00,
-      #ffea00,
-      #00e676,
-      #2979ff,
-      #d500f9
-    );
+    background: linear-gradient(45deg,
+        #ff3d00,
+        #ffea00,
+        #00e676,
+        #2979ff,
+        #d500f9);
     background-size: 400% 400%;
     filter: blur(15px);
     opacity: 0;
@@ -295,7 +284,7 @@
 }
 
 /* Scroll Down Arrow */
-@media only screen and (max-height: 775px) {
+@media only screen and (max-height: 786px) {
   .arrow-continue {
     display: none;
   }

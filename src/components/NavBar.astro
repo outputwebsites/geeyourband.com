@@ -6,62 +6,57 @@ const details = await getCollection("details");
 {/* Header */}
 <header
   id="header"
-  class="top-0 z-50 sticky bg-black py-4 border-purple-900/50 border-b"
+  class="top-0 z-50 sticky bg-linear-to-r from-purple-900/40 to-pink-900/30 backdrop-blur-sm py-2 min-[465px]:py-4 border-purple-900/50 border-b"
 >
-  <div class="mx-auto px-4 container">
   <nav
-  id="main-nav"
-  class="flex justify-between items-center text-white align-middle"
+    id="main-nav"
+    class="flex justify-between items-center mx-auto pr-4 pl-6 max-w-[1320px] text-white align-middle"
   >
-  <a
-  href="/"
-  title={details[0].data.name}
-  class="font-bold hover:text-yellow-400 text-2xl transition"
-  >
-  {details[0].data.name}
-  </a>
-  <!-- Desktop Navigation -->
-  <ul class="hidden lg:flex gap-6" aria-label="Main navigation">
-  <li>
     <a
-    href="/events"
-    class="hover:text-yellow-400 transition"
-    title="Events"
+      href="/"
+      title={details[0].data.name}
+      class="max-[465px]:max-w-[175px] font-bold hover:text-yellow-400 text-xl min-[465px]:text-2xl transition fredoka"
     >
-    Upcoming Shows
+      {details[0].data.name}
     </a>
-  </li>
-  <li>
-    <a
-    href="/band"
-    class="hover:text-yellow-400 transition"
-    title="Band Members"
-    >
-    Band Members
-    </a>
-  </li>
-  <li>
-    <a
-    href="/book"
-    class="hover:text-yellow-400 transition"
-    title="Book Us"
-    >
-    Book Us
-    </a>
-  </li>
-  </ul>
+    <!-- Desktop Navigation -->
+    <ul class="hidden lg:flex gap-6" aria-label="Main navigation">
+      <li>
+        <a href="/shows" class="hover:text-yellow-400 transition" title="Shows">
+          Upcoming Shows
+        </a>
+      </li>
+      <li>
+        <a
+          href="/tip"
+          class="hover:text-yellow-400 transition"
+          title="Leave a Tip"
+        >
+          Leave a Tip
+        </a>
+      </li>
+      <li>
+        <a
+          href="/book"
+          class="hover:text-yellow-400 transition"
+          title="Book Us"
+        >
+          Book Us
+        </a>
+      </li>
+    </ul>
 
-  <!-- Mobile Navigation -->
-  <div class="lg:hidden relative">
-  <button
-    id="menu-button"
-    aria-label="Open main menu"
-    aria-controls="mobile-menu"
-    aria-expanded="false"
-    class="p-2 rounded-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white hover:text-yellow-400 transition cursor-pointer"
-    title="Open main menu"
-    type="button"
-    onclick="
+    <!-- Mobile Navigation -->
+    <div class="lg:hidden relative">
+      <button
+        id="menu-button"
+        aria-label="Open main menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        class="p-2 rounded-sm focus:outline-hidden focus:ring-2 focus:ring-yellow-400 text-white hover:text-yellow-400 transition cursor-pointer"
+        title="Open main menu"
+        type="button"
+        onclick="
     const menu = document.getElementById('mobile-menu');
     const btn = document.getElementById('menu-button');
     const expanded = btn.getAttribute('aria-expanded') === 'true';
@@ -71,112 +66,140 @@ const details = await getCollection("details");
     menu.querySelector('a')?.focus();
     }
     "
-  >
-    <svg
-    class="w-7 h-7"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    >
-    <path
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    d="M4 6h16M4 12h16M4 18h16"></path>
-    </svg>
-  </button>
-  <ul
-    id="mobile-menu"
-    class="hidden right-0 z-50 absolute flex flex-col gap-2 bg-black shadow-lg mt-2 py-2 border border-purple-900/50 rounded-sm w-48"
-    role="menu"
-    aria-label="Mobile main navigation"
-    tabindex="-1"
-  >
-    <li role="none">
-    <a
-    href="/events"
-    class="block focus:bg-purple-900/20 px-4 py-2 hover:text-yellow-400 transition"
-    title="Events"
-    role="menuitem"
-    tabindex="0">Upcoming Shows</a
-    >
-    </li>
-    <li role="none">
-    <a
-    href="/band"
-    class="block focus:bg-purple-900/20 px-4 py-2 hover:text-yellow-400 transition"
-    title="Band Members"
-    role="menuitem"
-    tabindex="0">Band Members</a
-    >
-    </li>
-    <li role="none">
-    <a
-    href="/book"
-    class="block focus:bg-purple-900/20 px-4 py-2 hover:text-yellow-400 transition"
-    title="Book Us"
-    role="menuitem"
-    tabindex="0">Book Us</a
-    >
-    </li>
-  </ul>
-  </div>
+      >
+        <svg
+          class="w-7 h-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+      <ul
+        id="mobile-menu"
+        class="hidden right-0 z-50 absolute flex flex-col gap-2 bg-black shadow-lg mt-2 py-2 border border-purple-900/50 rounded-sm w-48"
+        role="menu"
+        aria-label="Mobile main navigation"
+        tabindex="-1"
+      >
+        <li role="none">
+          <a
+            href="/"
+            class="block focus:bg-purple-900/20 p-4 hover:text-yellow-400 transition"
+            title="Homepage"
+            role="menuitem"
+            tabindex="0">Home</a
+          >
+        </li>
+        <li role="none">
+          <a
+            href="/shows"
+            class="block focus:bg-purple-900/20 p-4 hover:text-yellow-400 transition"
+            title="Upcoming Shows"
+            role="menuitem"
+            tabindex="0">Upcoming Shows</a
+          >
+        </li>
+        <li role="none">
+          <a
+            href="/band"
+            class="block focus:bg-purple-900/20 p-4 hover:text-yellow-400 transition"
+            title="Band Members"
+            role="menuitem"
+            tabindex="0">Band Members</a
+          >
+        </li>
+        <li role="none">
+          <a
+            href="/tip"
+            class="block focus:bg-purple-900/20 p-4 hover:text-yellow-400 transition"
+            title="Leave a Tip"
+            role="menuitem"
+            tabindex="0">Leave a Tip</a
+          >
+        </li>
+        <li role="none">
+          <a
+            href="/book"
+            class="block focus:bg-purple-900/20 p-4 hover:text-yellow-400 transition"
+            title="Book Us"
+            role="menuitem"
+            tabindex="0">Book Us</a
+          >
+        </li>
+      </ul>
+    </div>
   </nav>
-  </div>
   <script is:inline>
-  // Close mobile menu when clicking outside
-  document.addEventListener('click', function (e) {
-    const menu = document.getElementById('mobile-menu');
-    const btn = document.getElementById('menu-button');
-    if (!menu || !btn) return;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    if (!expanded) return;
-    if (
-    !menu.contains(e.target) &&
-    !btn.contains(e.target)
-    ) {
-    menu.classList.add('hidden');
-    btn.setAttribute('aria-expanded', 'false');
-    }
-  });
+    // Close mobile menu when clicking outside
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("mobile-menu");
+      const btn = document.getElementById("menu-button");
+      if (!menu || !btn) return;
+      const expanded = btn.getAttribute("aria-expanded") === "true";
+      if (!expanded) return;
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.add("hidden");
+        btn.setAttribute("aria-expanded", "false");
+      }
+    });
   </script>
   <script is:inline>
-  // Hide header on scroll down, show on scroll up
-  let lastScrollY = window.scrollY;
-  let ticking = false;
+    // Hide header on scroll down, show on scroll up
+    let lastScrollY = window.scrollY;
+    let ticking = false;
 
-  function handleScroll() {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const header = document.getElementById('header');
-        const currentScrollY = window.scrollY < 0 ? 1 : window.scrollY;
-        if (currentScrollY > lastScrollY) {
-          // Scrolling down
-          header.classList.add('nav-hide');
-        } else {
-          // Scrolling up
-          header.classList.remove('nav-hide');
-        }
-        lastScrollY = currentScrollY;
-        ticking = false;
-      });
-      ticking = true;
+    function handleScroll() {
+      const header = document.getElementById("header");
+      const menu = document.getElementById("mobile-menu");
+      const btn = document.getElementById("menu-button");
+      const currentScrollY = window.scrollY < 0 ? 1 : window.scrollY;
+
+      // Close mobile menu on scroll down
+      if (
+        menu &&
+        btn &&
+        btn.getAttribute("aria-expanded") === "true" &&
+        currentScrollY > lastScrollY
+      ) {
+        menu.classList.add("hidden");
+        btn.setAttribute("aria-expanded", "false");
+      }
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (currentScrollY > lastScrollY) {
+            // Scrolling down
+            header.classList.add("nav-hide");
+          } else {
+            // Scrolling up
+            header.classList.remove("nav-hide");
+          }
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
     }
-  }
 
-  window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-  // Optional: Clean up event listener if using Astro Islands/hydration
-  // window.removeEventListener('scroll', handleScroll);
+    // Optional: Clean up show listener if using Astro Islands/hydration
+    // window.removeShowListener('scroll', handleScroll);
   </script>
   <style>
     .nav-hide {
       transform: translateY(-100%);
-      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     #header {
-      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
   </style>
 </header>

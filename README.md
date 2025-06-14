@@ -5,7 +5,7 @@
 _(This repository contains the Website Starter Kit for Output Websites.)_
 _[Website, Web Design]_
 
-**Made Using:** [Astro v4](https://astro.build "Astro.build Homepage"), [Astro Icon](https://astroicon.dev "AstroIcon.dev Homepage"), [Sitemap Astro Integration](https://docs.astro.build/en/guides/integrations-guide/sitemap "Astro Sitemap Docs"), [Tailwind CSS Astro Integration](https://docs.astro.build/en/guides/integrations-guide/tailwind "Astro Tailwind CSS Docs"), [Autoprefixer](https://npmjs.com/package/autoprefixer "Autoprefixer NPM Listing"), [Decap CMS](https://decapcms.org "DecapCMS.org Homepage"), [Netlify](https://netlify.com "Netlify.com Homepage")
+**Made Using:** [Astro v5](https://astro.build "Astro.build Homepage"), [Astro Icon](https://astroicon.dev "AstroIcon.dev Homepage"), [Sitemap Astro Integration](https://docs.astro.build/en/guides/integrations-guide/sitemap "Astro Sitemap Docs"), [Tailwind CSS Astro Integration](https://docs.astro.build/en/guides/integrations-guide/tailwind "Astro Tailwind CSS Docs"), [Autoprefixer](https://npmjs.com/package/autoprefixer "Autoprefixer NPM Listing"), [Decap CMS](https://decapcms.org "DecapCMS.org Homepage"), [Netlify](https://netlify.com "Netlify.com Homepage")
 
 ---
 

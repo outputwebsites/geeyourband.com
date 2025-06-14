@@ -3,6 +3,17 @@ import { marked } from "marked";
 import { getCollection } from "astro:content";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import CardShow from "@components/CardShow.astro";
+
+const shows = await getCollection("show");
+
+// Filter shows only include upcoming shows
+const now = new Date();
+const memberShows = shows
+  .filter((show) => show.data.date && new Date(show.data.date) >= now)
+  .sort(
+    (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
+  );
 
 export async function getStaticPaths() {
   const members = await getCollection("member");
@@ -79,6 +90,38 @@ const bgColors = [
 
     <section id="member-content" class="my-8 overflow-auto">
       <p set:html={content} />
+    </section>
+
+    <section id="member-shows" class="mt-32">
+      <div class="flex items-center mb-12">
+        <div class="flex-1 bg-linear-to-r from-transparent to-purple-500 h-px">
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>{shows.length > 1 ? "UPCOMING SHOWS" : "UPCOMING SHOW"}</span>
+        </h2>
+        <div class="flex-1 bg-linear-to-l from-transparent to-purple-500 h-px">
+        </div>
+      </div>
+      {
+        memberShows.length === 0 && (
+          <p class="text-yellow-200 text-center">
+            No upcoming shows for this member.
+          </p>
+        )
+      }
+      {
+        shows.length >= 1 && (
+          <div class="flex flex-col justify-center items-center gap-8 w-full text-center align-middle">
+            <div class="flex flex-col justify-center items-stretch gap-16 px-10 py-3 w-full max-w-[1400px] overflow-hidden text-center">
+              {shows.map((show, index) => (
+                <CardShow show={show} index={index} />
+              ))}
+            </div>
+          </div>
+        )
+      }
     </section>
   </article>
 </BaseLayout>
