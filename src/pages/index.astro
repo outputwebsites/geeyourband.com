@@ -175,17 +175,17 @@ const shows = (await getCollection("show"))
       >
         <div class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5">
           {/* Fade to black at top */}
-          <div class="top-0 right-0 left-0 absolute bg-gradient-to-t from-transparent to-black h-16 pointer-events-none"></div>
+          <div class="top-0 right-0 left-0 absolute bg-gradient-to-t from-transparent to-black h-16 pointer-events-none" />
         </div>
         <div class="z-10 relative mx-auto px-4 container">
-          <div class="flex items-center mb-12">
-            <div class="flex-1 bg-linear-to-r from-transparent to-pink-500 h-px"></div>
+          <div class="flex items-center mb-8">
+            <div class="flex-1 bg-linear-to-r from-transparent to-pink-500 h-px" />
             <h2 class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center">
               <span>
                 {shows.length > 1 ? "UPCOMING SHOWS" : "UPCOMING SHOW"}
               </span>
             </h2>
-            <div class="flex-1 bg-linear-to-l from-transparent to-pink-500 h-px"></div>
+            <div class="flex-1 bg-linear-to-l from-transparent to-pink-500 h-px" />
           </div>
           <div
             id="upcoming-shows-list"

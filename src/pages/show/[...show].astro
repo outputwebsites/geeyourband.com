@@ -79,10 +79,32 @@ const bgColors = [
       id="show-info"
       class="flex flex-col gap-4 mx-auto mt-8 max-w-[1087px]"
     >
-      <section id="show-details" class="flex flex-col gap-4">
+      <section
+        id="show-details"
+        class="flex flex-col justify-center items-center gap-4 mb-8"
+      >
         <h1 id={show.data.title}>{show.data.title}</h1>
-        <div>
-          {show.data.date && <p>{formatDate(show.data.date)}</p>}
+        <div class="flex flex-col justify-center items-center gap-4">
+          <span class="font-medium text-md text-white">
+            {
+              new Date(show.data.date).toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })
+            }
+          </span>
+          <span
+            class="bg-pink-700/80 shadow-sm px-3 py-1 rounded-full font-bold text-white text-lg"
+          >
+            {
+              new Date(show.data.date).toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+                hour12: true,
+              })
+            }
+          </span>
         </div>
       </section>
 
@@ -90,15 +112,15 @@ const bgColors = [
         members.length !== 0 && (
           <section
             id="members-and-content"
-            class="flex md:flex-row flex-col justify-left items-stretch gap-4"
+            class="flex flex-col justify-left items-stretch gap-4"
           >
-            <div class="flex flex-col justify-left items-stretch gap-2 border-yellow-400 border-t">
+            <div class="flex flex-col justify-left items-stretch gap-2 mb-6 pb-6 border-yellow-400 border-t border-b">
               <h2 class="pt-4 text-base">Band</h2>
-            <div class="flex lg:flex-col flex-wrap justify-left items-stretch gap-6">
-              {members.map((member, index) => (
-                <CardMemberSmall index={index} member={member} />
-              ))}
-            </div>
+              <div class="flex-col justify-left items-stretch gap-6 grid grid-cols-3 max-[550px]:grid-cols-2">
+                {members.map((member, index) => (
+                  <CardMemberSmall index={index} member={member} />
+                ))}
+              </div>
             </div>
 
             <div id="show-content" class="mx-auto max-w-3xl overflow-auto">

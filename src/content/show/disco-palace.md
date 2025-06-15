@@ -1,7 +1,6 @@
 ---
 title: Disco Palace
 member:
-  - will-power
   - j-j-aquarius
   - allison-wonderland
   - bobby-dingo

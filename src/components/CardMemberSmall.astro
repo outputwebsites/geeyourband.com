@@ -25,10 +25,10 @@ const bgColors = [
   href={"/member/" + member.slug}
   title={member.data.name}
   id={"band-member-" + index}
-  class="group block no-underline hover:no-underline hover:scale-105 transition-transform transform"
+  class="group block min-[768px]:mb-6 no-underline hover:no-underline hover:scale-105 transition-transform transform"
 >
   <div
-    class="flex flex-col items-center gap-2 bg-linear-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl backdrop-blur-sm border border-pink-400/30 hover:border-pink-400/70 rounded-xl w-full min-w-[162.767px] transition-all duration-300"
+    class="flex flex-col items-stretch gap-2 bg-linear-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl backdrop-blur-sm border border-pink-400/30 hover:border-pink-400/70 rounded-xl transition-all duration-300"
   >
     <div class="relative aspect-square">
       {
@@ -38,8 +38,8 @@ const bgColors = [
               <Image
                 src={member.data.photo}
                 alt={member.data.name}
-                width={50}
-                height={50}
+                width={162.767}
+                height={162.767}
                 decoding="async"
                 class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
               />
@@ -66,10 +66,10 @@ const bgColors = [
         )
       }
     </div>
-    <div class="p-4 w-full text-center">
+    <!-- <div class="p-4 w-full text-center">
       <h3 class="text-pink-400 text-xl">
         <strong>{member.data.name}</strong>
       </h3>
-    </div>
+    </div> -->
   </div>
 </a>
