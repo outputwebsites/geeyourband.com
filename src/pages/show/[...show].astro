@@ -19,9 +19,9 @@ const content = await marked.parse(
   show.body.replace(/\n(?=\n)/g, "\n\n<br/>\n"),
 );
 
-const members = (await getEntries(show.data.member)).filter(
-  (member) => member.collection === "member",
-);
+const members = (await getEntries(show.data.member))
+  .filter((member) => member.collection === "member")
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 
 const bgColors = [
   "bg-amber-400",
@@ -45,9 +45,9 @@ const bgColors = [
 >
   <article
     id="show"
-    class="mx-auto px-3 pt-16 max-[460px]:pt-10 pb-32 max-w-4xl"
+    class="flex flex-col gap-8 mx-auto px-6 pt-6 max-[460px]:pt-10 pb-32 max-w-[1320px] container"
   >
-    <div class="relative">
+    <section id="show-image" class="relative">
       {
         show.data.image && (
           <picture>
@@ -73,25 +73,40 @@ const bgColors = [
           </picture>
         )
       }
-    </div>
-
-    <section id="show-details" class="flex flex-col gap-4 mt-8">
-      <h1 id={show.data.title}>{show.data.title}</h1>
-      <div>
-        {show.data.date && <p>{formatDate(show.data.date)}</p>}
-
-        <div class="flex flex-wrap justify-left items-start gap-4 mt-2">
-          {
-            members.map((member, index) => (
-              <CardMemberSmall index={index} member={member} />
-            ))
-          }
-        </div>
-      </div>
     </section>
 
-    <section id="show-content" class="my-8 overflow-auto">
-      <p set:html={content} />
+    <section
+      id="show-info"
+      class="flex flex-col gap-4 mx-auto mt-8 max-w-[1087px]"
+    >
+      <section id="show-details" class="flex flex-col gap-4">
+        <h1 id={show.data.title}>{show.data.title}</h1>
+        <div>
+          {show.data.date && <p>{formatDate(show.data.date)}</p>}
+        </div>
+      </section>
+
+      {
+        members.length !== 0 && (
+          <section
+            id="members-and-content"
+            class="flex md:flex-row flex-col justify-left items-stretch gap-4"
+          >
+            <div class="flex flex-col justify-left items-stretch gap-2 border-yellow-400 border-t">
+              <h2 class="pt-4 text-base">Band</h2>
+            <div class="flex lg:flex-col flex-wrap justify-left items-stretch gap-6">
+              {members.map((member, index) => (
+                <CardMemberSmall index={index} member={member} />
+              ))}
+            </div>
+            </div>
+
+            <div id="show-content" class="mx-auto max-w-3xl overflow-auto">
+              <p set:html={content} />
+            </div>
+          </section>
+        )
+      }
     </section>
   </article>
 </BaseLayout>
