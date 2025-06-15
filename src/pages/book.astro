@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "src/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import BaseLayout from "src/layouts/BaseLayout.astro";
 
 const details = await getCollection("details");
 ---
@@ -15,14 +15,10 @@ const details = await getCollection("details");
   {/* Book Us Section */}
   <section
     id="book-us"
-    class="relative bg-linear-to-b from-black to-purple-950/50 pt-20 pb-32"
+    class="relative pt-20 pb-32"
   >
-    <!-- <div
-      class="absolute inset-0 bg-[url('/assets/images/pattern.png')] opacity-5"
-    >
-    </div> -->
-    <div class="z-10 relative mx-auto px-4 container">
-      <div class="flex items-center mb-12">
+    <div class="z-10 relative mx-auto px-6 container">
+      <div class="flex items-center mx-auto mb-12 max-w-[1320px]">
         <div class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px">
         </div>
         <h2

@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "src/layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import BaseLayout from "src/layouts/BaseLayout.astro";
 import CardMember from "@components/CardMember.astro";
 
 const members = (await getCollection("member")).sort(
@@ -21,7 +21,7 @@ const details = await getCollection("details");
   {/* Band Members Section */}
   <section id="band-members" class="relative bg-black px-3 pt-20 pb-32">
     <div class="absolute inset-0 bg-black opacity-10"></div>
-    <div class="z-10 relative mx-auto px-4 container">
+    <div class="z-10 relative mx-auto px-6 max-w-[1320px] container">
       <div class="flex items-center mb-12">
         <div class="flex-1 bg-linear-to-r from-transparent to-purple-500 h-px">
         </div>

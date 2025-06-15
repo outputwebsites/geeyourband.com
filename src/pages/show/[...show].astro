@@ -1,10 +1,10 @@
 ---
-import { marked } from "marked";
 import { getCollection, getEntries } from "astro:content";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CardMemberSmall from "@components/CardMemberSmall.astro";
-import { Image } from "astro:assets";
+import { marked } from "marked";
 import { formatDate } from "@js/utils";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const shows = await getCollection("show");
@@ -22,6 +22,15 @@ const content = await marked.parse(
 const members = (await getEntries(show.data.member)).filter(
   (member) => member.collection === "member",
 );
+
+const bgColors = [
+  "bg-amber-400",
+  "bg-rose-400",
+  "bg-yellow-400",
+  "bg-pink-400",
+  "bg-sky-600",
+  "bg-lime-400",
+];
 ---
 
 <BaseLayout
@@ -38,20 +47,33 @@ const members = (await getEntries(show.data.member)).filter(
     id="show"
     class="mx-auto px-3 pt-16 max-[460px]:pt-10 pb-32 max-w-4xl"
   >
-    {
-      show.data.image && (
-        <picture>
-          <Image
-            src={show.data.image}
-            alt={show.data.imageAlt ? show.data.imageAlt : show.data.title}
-            width={show.data.image.width}
-            height={show.data.image.height}
-            decoding="async"
-            class="rounded-lg w-full h-auto"
-          />
-        </picture>
-      )
-    }
+    <div class="relative">
+      {
+        show.data.image && (
+          <picture>
+            {typeof show.data.image === "object" ? (
+              <Image
+                src={show.data.image}
+                alt={show.data.title}
+                width={show.data.image.width}
+                height={show.data.image.height}
+                loading="eager"
+                class={`${bgColors[0]} w-full h-full object-cover rounded-lg`}
+              />
+            ) : (
+              <img
+                src={show.data.image}
+                alt={show.data.title}
+                width={350}
+                height={350}
+                loading="eager"
+                class={`${bgColors[0]} w-full h-full object-cover rounded-lg`}
+              />
+            )}
+          </picture>
+        )
+      }
+    </div>
 
     <section id="show-details" class="flex flex-col gap-4 mt-8">
       <h1 id={show.data.title}>{show.data.title}</h1>

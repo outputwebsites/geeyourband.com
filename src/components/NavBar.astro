@@ -1,16 +1,22 @@
 ---
 import { getCollection } from "astro:content";
+
 const details = await getCollection("details");
+const shows = (await getCollection("show"))
+  .filter((show) => new Date(show.data.date) >= new Date())
+  .sort(
+    (a, b) => new Date(a.data.date).valueOf() - new Date(b.data.date).valueOf(),
+  );
 ---
 
 {/* Header */}
 <header
   id="header"
-  class="top-0 z-50 sticky bg-linear-to-r from-purple-900/40 to-pink-900/30 backdrop-blur-sm py-2 min-[465px]:py-4 border-purple-900/50 border-b"
+  class="top-0 z-50 sticky bg-linear-to-r from-purple-900/40 to-pink-900/30 backdrop-blur-lg py-2 min-[465px]:py-4 pr-4 pl-6 border-purple-900/50 border-b"
 >
   <nav
     id="main-nav"
-    class="flex justify-between items-center mx-auto pr-4 pl-6 max-w-[1320px] text-white align-middle"
+    class="flex justify-between items-center mx-auto max-w-[1320px] text-white align-middle"
   >
     <a
       href="/"
@@ -21,11 +27,29 @@ const details = await getCollection("details");
     </a>
     <!-- Desktop Navigation -->
     <ul class="hidden lg:flex gap-6" aria-label="Main navigation">
-      <li>
-        <a href="/shows" class="hover:text-yellow-400 transition" title="Shows">
-          Upcoming Shows
-        </a>
-      </li>
+      {
+        shows.length !== 0 ? (
+          <li>
+            <a
+              href="/shows"
+              class="hover:text-yellow-400 transition"
+              title="Shows"
+            >
+              Upcoming Shows
+            </a>
+          </li>
+        ) : (
+          <li>
+            <a
+              href="/band"
+              class="hover:text-yellow-400 transition"
+              title="Band Members"
+            >
+              Band Members
+            </a>
+          </li>
+        )
+      }
       <li>
         <a
           href="/tip"

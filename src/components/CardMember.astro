@@ -1,11 +1,14 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
 export interface Props {
   index: number;
   member: CollectionEntry<"member">;
 }
+
+const details = await getCollection("details");
 
 const { member, index } = Astro.props;
 
@@ -53,12 +56,12 @@ const bgColors = [
             )}
           </picture>
         ) : (
-          <img
+          <Image
             src="/assets/svgs/logo.svg"
-            alt=""
+            alt={details[0].data.name}
             width={350}
             height={350}
-            decoding="async"
+            loading="eager"
             class="bg-transparent drop-shadow-sm"
           />
         )

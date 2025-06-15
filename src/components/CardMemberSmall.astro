@@ -1,7 +1,9 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 
+const details = await getCollection("details");
 export interface Props {
   index: number;
   member: CollectionEntry<"member">;
@@ -30,7 +32,7 @@ const bgColors = [
   >
     <div class="relative aspect-square">
       {
-        member.data.photo && (
+        member.data.photo ? (
           <picture>
             {typeof member.data.photo === "object" ? (
               <Image
@@ -39,7 +41,7 @@ const bgColors = [
                 width={50}
                 height={50}
                 decoding="async"
-                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-t-lg`}
+                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
               />
             ) : (
               <img
@@ -48,10 +50,19 @@ const bgColors = [
                 width={50}
                 height={50}
                 decoding="async"
-                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-t-lg`}
+                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
               />
             )}
           </picture>
+        ) : (
+          <Image
+            src="/assets/svgs/logo.svg"
+            alt={details[0].data.name}
+            width={350}
+            height={350}
+            loading="eager"
+            class="bg-transparent drop-shadow-sm"
+          />
         )
       }
     </div>

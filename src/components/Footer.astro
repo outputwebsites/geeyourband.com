@@ -1,5 +1,7 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
 const details = await getCollection("details");
 const footerLinks = [
   { href: "/shows", title: "Upcoming Shows" },
@@ -21,7 +23,7 @@ const footerLinks = [
       {/* Logo */}
       <div class="flex justify-center items-center">
         <a title={details[0].data.name} href="/">
-          <img
+          <Image
             src="/assets/svgs/logo.svg"
             alt={details[0].data.name}
             width={350}
@@ -43,7 +45,7 @@ const footerLinks = [
           aria-label="Facebook"
           class="flex items-center gap-2 hover:text-yellow-400 transition"
         >
-          <img
+          <Image
             src="/assets/svgs/facebook.svg"
             alt="Facebook"
             width={50}
@@ -61,7 +63,7 @@ const footerLinks = [
           aria-label="Instagram"
           class="flex items-center gap-2 hover:text-yellow-400 transition"
         >
-          <img
+          <Image
             src="/assets/svgs/instagram.svg"
             alt="Instagram"
             width={50}
@@ -95,23 +97,23 @@ const footerLinks = [
       class="flex flex-col justify-center items-center gap-3 text-center align-middle"
     >
       <p class="text-blue-400 text-lg">
-        Love what we do? <br />Support us with a tip!
+        Love what we do? <br />Support us by tipping!
       </p>
       <a
         href={details[0].data.link_venmo}
         target="_blank"
         rel="noopener"
         title="Leave a tip using Venmo"
-        class="bg-[#0c122c] px-10 py-6 border border-blue-400/40 hover:border-blue-300 button"
+        class="group bg-[#0c122c] hover:bg-[#141f4b] px-10 py-6 border border-blue-400/40 hover:border-blue-300 button"
       >
-        <img
+        <Image
           src="/assets/svgs/venmo.svg"
           alt="Venmo"
           width={194}
           height={36}
-          loading="lazy"
-          class="bg-[#0c122c] text-white text-2xl"
           decoding="async"
+          loading="lazy"
+          class="bg-[#0c122c] group-hover:bg-[#141f4b] text-white text-2xl"
         />
       </a>
     </section>
