@@ -48,11 +48,17 @@ collections:
   create: true # Allow users to create new documents in this collection
   fields:
   - { label: "Title", name: "title", widget: "string", hint: "Keep titles brief yet descriptive." }
+  - { label: "Start Date", name: "startDate", widget: "string", hint: "Start date of the show. (ie Fri, Jun 16, 2025 | Sat, Apr 14 | Sun, Aug 9)" }
+  - { label: "Start Time", name: "startTime", widget: "string", hint: "Start time of the show. (ie 7:00pm, 11:30am, 1:15am, 9:30pm)" }
+  - { label: "End Date", name: "endDate", widget: "string", hint: "End date of the show. (ie Fri, Jun 16, 2025 | Sat, Apr 14 | Sun, Aug 9)" }
+  - { label: "End Time", name: "endTime", widget: "string", hint: "Time the end of the show is in. (ie 7:00pm, 11:30am, 1:15am, 9:30pm)" }
+  - { label: "Timezone", name: "timezone", widget: "string", required: false, hint: "Timezone the show is in. (ie EST, EDT, CST, CDT) | Default = EDT" }
+  - { label: "Location Name", name: "location", widget: "string", required: false, hint: "Name of the venue the show is in. (ie The White House, Hard Rock Miami, McDonald's)" }
+  - { label: "Location Address", name: "locationAddress", widget: "string", required: false, hint: "Exact address the show is located at. (ie 123 Wallaby Way, Cincinnati, OH 45213" }
   - { label: "Member", name: "member", widget: relation, collection: member, multiple: true, search_fields: [ "name" ], display_fields: [ "name" ], value_field: "{{slug}}", hint: "Select the member(s) in the show." }
-  - { label: "Body", name: "body", widget: "markdown", hint: "Write your show content in the box above." }
-  - { label: "Featured Image", name: "image", widget: "image", hint: "Add a photo to display at the top of the show." }
+  - { label: "Body", name: "body", widget: "markdown", required: false, hint: "Write your show content in the box above." }
+  - { label: "Featured Image", name: "image", widget: "image", required: false, hint: "Add a photo to display at the top of the show." }
   - { label: "Featured Image Caption", name: "imageAlt", widget: "string", required: false, hint: "Add a caption to describe the featured image." }
-  - { label: "Publish Date", name: "date", widget: "datetime", default: "{{now}}", hint: "Choose the date and time the show was published or written." }
   - { label: "Tags", name: "tags", widget: "list", required: false, hint: "Add comma-separated tags to help categorize your show. (Don't press space!)" }
 - name: "member" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
   label: "Members" # Used in the admin dashboard UI
@@ -66,6 +72,8 @@ collections:
   - { label: "Real Name", name: "real_name", required: false, widget: "string", hint: "Enter your full name." }
   - { label: "Adjective", name: "adjective", required: false, widget: "string", hint: "Catchy and unique adjective to describe each band member." }
   - { label: "Instrument", name: "instrument", required: false, widget: "string", hint: "Instrument(s) associated with each band member." }
-  - { label: "Short Bio", name: "bio", widget: "string", hint: "Add a short biography to display under your member credits." }
+  - { label: "Short Bio", name: "bio", widget: "string", required: false, hint: "Add a short biography to display under your member credits." }
+  - { label: "Main Member?", name: "main", widget: "boolean", hint: "True = One of the main/primary members | False = Backup or alternate member." }
   - { label: "Order", name: "order", widget: "string", hint: "Set the order of clinicians on the clinicians page. 1 = first, 2 = seconds, and so on..." }
-  - { label: "Portrait Image", name: "photo", widget: "image", hint: "Add a square portrait image featuring a color head shot." }
+  - { label: "Portrait BG Color", name: "photoColor", widget: "string", required: false, hint: "Set the background color behind the portrait image. (Use HEX such as #ffffff or #000000)" }
+  - { label: "Portrait Image", name: "photo", widget: "image", required: false, hint: "Add a square portrait image featuring a color head shot." }

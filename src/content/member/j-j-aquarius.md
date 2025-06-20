@@ -4,6 +4,8 @@ real_name: ""
 adjective: "Boomin'"
 instrument: Bass
 bio: ""
-order: 5
+main: true
+order: 6
+photoColor: "#ffb900"
 photo: src/assets/images/media/jj-aquarius.webp
 ---

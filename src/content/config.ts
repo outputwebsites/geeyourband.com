@@ -29,9 +29,15 @@ const showsCollection = defineCollection({
 		z.object({
 			title: z.string(),
 			member: z.array(reference("member")),
-			date: z.date(),
+			startDate: z.string(),
+			startTime: z.string(),
+			endDate: z.string(),
+			endTime: z.string(),
+			timezone: z.string().optional(),
+			location: z.string().optional(),
+			locationAddress: z.string().optional(),
 			tags: z.array(z.string()).optional(),
-			image: image(),
+			image: image().or(z.string()).optional(),
 			imageAlt: z.string().optional(),
 		}),
 });
@@ -44,9 +50,11 @@ const membersCollection = defineCollection({
 			real_name: z.string().optional(),
 			adjective: z.string().optional(),
 			instrument: z.string().optional(),
-			bio: z.string(),
+			bio: z.string().optional(),
+			main: z.boolean(),
 			order: z.number(),
-			photo: image().or(z.string()),
+			photoColor: z.string().optional(),
+			photo: image().or(z.string()).optional(),
 		}),
 });
 

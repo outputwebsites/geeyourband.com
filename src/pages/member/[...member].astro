@@ -7,10 +7,23 @@ import { Image } from "astro:assets";
 
 const details = await getCollection("details");
 const shows = (await getCollection("show"))
-  .filter((show) => new Date(show.data.date) >= new Date())
-  .sort(
-    (a, b) => new Date(a.data.date).valueOf() - new Date(b.data.date).valueOf(),
-  );
+  .filter((show) => {
+    // Parse "Sat, Jun 19" as MM-DD of current year
+    const [_, monthStr, dayStr] = show.data.startDate.split(' ');
+    const month = new Date(`${monthStr} 1, 2000`).getMonth(); // get month index
+    const day = parseInt(dayStr, 10);
+    const year = new Date().getFullYear();
+    const showDate = new Date(year, month, day);
+    return showDate >= new Date();
+  })
+  .sort((a, b) => {
+    const [_, amonthStr, adayStr] = a.data.startDate.split(' ');
+    const [__, bmonthStr, bdayStr] = b.data.startDate.split(' ');
+    const year = new Date().getFullYear();
+    const adate = new Date(year, new Date(`${amonthStr} 1, 2000`).getMonth(), parseInt(adayStr, 10));
+    const bdate = new Date(year, new Date(`${bmonthStr} 1, 2000`).getMonth(), parseInt(bdayStr, 10));
+    return adate.getTime() - bdate.getTime();
+  });
 
 export async function getStaticPaths() {
   const members = await getCollection("member");
@@ -22,7 +35,7 @@ export async function getStaticPaths() {
 
 const { member } = Astro.props;
 const content = await marked.parse(
-  member.data.bio.replace(/\n(?=\n)/g, "\n\n<br/>\n"),
+  member.data.bio ? member.data.bio.replace(/\n(?=\n)/g, "\n\n<br/>\n") : "",
 );
 const bgColors = [
   "bg-amber-400",
@@ -36,13 +49,13 @@ const bgColors = [
 
 <BaseLayout
   title={member.data.name + " - " + member.data.instrument}
-  description={member.data.bio
+  description={member.data.bio ? (member.data.bio
     .split(" ")
     .slice(0, 20)
     .join(" ")
     .replace(/[#*_\`]/g, "")
     .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
-    .trim() + (member.data.bio.split(" ").length > 20 && "...")}
+    .trim() + (member.data.bio.split(" ").length > 20 && "...")) : ""}
 >
   <article
     id="member"

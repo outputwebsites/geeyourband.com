@@ -3,9 +3,9 @@ import { getCollection } from "astro:content";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CardMember from "@components/CardMember.astro";
 
-const members = (await getCollection("member")).sort(
-  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0),
-);
+const members = (await getCollection("member"))
+  .filter((member) => member.data.main !== false)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const details = await getCollection("details");
 ---
 

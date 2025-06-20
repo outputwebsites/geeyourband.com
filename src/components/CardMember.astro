@@ -42,7 +42,12 @@ const bgColors = [
                 width={member.data.photo.width}
                 height={member.data.photo.height}
                 decoding="async"
-                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-t-lg`}
+                class="rounded-t-lg w-full h-full object-cover"
+                style={
+                  member.data.photoColor
+                    ? `background-color: ${member.data.photoColor};`
+                    : bgColors[member.data.order % bgColors.length]
+                }
               />
             ) : (
               <img
@@ -51,7 +56,12 @@ const bgColors = [
                 width={350}
                 height={350}
                 decoding="async"
-                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-t-lg`}
+                class="rounded-t-lg w-full h-full object-cover"
+                style={
+                  member.data.photoColor
+                    ? `background-color: ${member.data.photoColor};`
+                    : bgColors[member.data.order % bgColors.length]
+                }
               />
             )}
           </picture>
@@ -62,7 +72,12 @@ const bgColors = [
             width={350}
             height={350}
             loading="eager"
-            class="bg-transparent drop-shadow-sm"
+            class="rounded-t-lg w-full h-full object-cover"
+            style={
+              member.data.photoColor
+                ? `background-color: ${member.data.photoColor};`
+                : bgColors[member.data.order % bgColors.length]
+            }
           />
         )
       }

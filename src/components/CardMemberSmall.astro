@@ -25,7 +25,7 @@ const bgColors = [
   href={"/member/" + member.slug}
   title={member.data.name}
   id={"band-member-" + index}
-  class="group block min-[768px]:mb-6 no-underline hover:no-underline hover:scale-105 transition-transform transform"
+  class="group block no-underline hover:no-underline hover:scale-105 transition-transform transform"
 >
   <div
     class="flex flex-col items-stretch gap-2 bg-linear-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl backdrop-blur-sm border border-pink-400/30 hover:border-pink-400/70 rounded-xl transition-all duration-300"
@@ -41,7 +41,12 @@ const bgColors = [
                 width={162.767}
                 height={162.767}
                 decoding="async"
-                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+                class="rounded-t-lg w-full h-full object-cover"
+                style={
+                  member.data.photoColor
+                    ? `background-color: ${member.data.photoColor};`
+                    : bgColors[member.data.order % bgColors.length]
+                }
               />
             ) : (
               <img
@@ -50,7 +55,12 @@ const bgColors = [
                 width={50}
                 height={50}
                 decoding="async"
-                class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+                class="rounded-t-lg w-full h-full object-cover"
+                style={
+                  member.data.photoColor
+                    ? `background-color: ${member.data.photoColor};`
+                    : bgColors[member.data.order % bgColors.length]
+                }
               />
             )}
           </picture>
@@ -61,15 +71,22 @@ const bgColors = [
             width={350}
             height={350}
             loading="eager"
-            class="bg-transparent drop-shadow-sm"
+            class="rounded-t-lg w-full h-full object-cover"
+            style={
+              member.data.photoColor
+                ? `background-color: ${member.data.photoColor};`
+                : bgColors[member.data.order % bgColors.length]
+            }
           />
         )
       }
     </div>
-    <!-- <div class="p-4 w-full text-center">
-      <h3 class="text-pink-400 text-xl">
+    <div class="px-4 pt-2 pb-4 w-full text-center align-middle">
+      <h3
+        class="flex justify-center items-center min-h-14 text-pink-400 max-[376px]:text-base text-xl text-center align-middle"
+      >
         <strong>{member.data.name}</strong>
       </h3>
-    </div> -->
+    </div>
   </div>
 </a>

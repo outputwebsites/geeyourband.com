@@ -3,10 +3,23 @@ import { getCollection } from "astro:content";
 
 const details = await getCollection("details");
 const shows = (await getCollection("show"))
-  .filter((show) => new Date(show.data.date) >= new Date())
-  .sort(
-    (a, b) => new Date(a.data.date).valueOf() - new Date(b.data.date).valueOf(),
-  );
+  .filter((show) => {
+    // Parse "Sat, Jun 19" as MM-DD of current year
+    const [_, monthStr, dayStr] = show.data.startDate.split(' ');
+    const month = new Date(`${monthStr} 1, 2000`).getMonth(); // get month index
+    const day = parseInt(dayStr, 10);
+    const year = new Date().getFullYear();
+    const showDate = new Date(year, month, day);
+    return showDate >= new Date();
+  })
+  .sort((a, b) => {
+    const [_, amonthStr, adayStr] = a.data.startDate.split(' ');
+    const [__, bmonthStr, bdayStr] = b.data.startDate.split(' ');
+    const year = new Date().getFullYear();
+    const adate = new Date(year, new Date(`${amonthStr} 1, 2000`).getMonth(), parseInt(adayStr, 10));
+    const bdate = new Date(year, new Date(`${bmonthStr} 1, 2000`).getMonth(), parseInt(bdayStr, 10));
+    return adate.getTime() - bdate.getTime();
+  });
 ---
 
 {/* Header */}

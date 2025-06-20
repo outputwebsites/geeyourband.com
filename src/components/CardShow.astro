@@ -20,49 +20,50 @@ const { show, index } = Astro.props;
     class="flex flex-col items-center gap-6 bg-linear-to-r from-purple-900/40 to-pink-900/30 shadow-lg hover:shadow-xl backdrop-blur-sm p-4 border border-pink-400/30 hover:border-pink-400/70 rounded-xl transition-all duration-300"
   >
     <div class="flex md:flex-row flex-col items-center gap-4 w-full">
-      <div class="flex flex-col items-center gap-2 w-full">
-        <div class="flex items-center gap-4">
-          <span class="font-medium text-md text-white">
-            {
-              new Date(show.data.date).toLocaleDateString("en-US", {
-                weekday: "short",
-                month: "short",
-                day: "numeric",
-              })
-            }
-          </span>
-          <span
-            class="bg-pink-700/80 shadow-sm px-3 py-1 rounded-full font-bold text-white text-lg"
-          >
-            {
-              new Date(show.data.date).toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-              })
-            }
-          </span>
-        </div>
+      <div class="flex flex-col items-center gap-4 my-4 w-full">
         <h3
-          class="mt-2 mb-1 font-extrabold text-white group-hover:text-pink-300 text-2xl text-center transition-colors duration-200"
+          class="font-extrabold text-white group-hover:text-pink-300 text-2xl text-center transition-colors duration-200"
         >
           {show.data.title}
         </h3>
-        <p class="text-yellow-200 text-lg text-center italic tracking-wide">
-          Cincinnati
-        </p>
+        <div class="flex flex-col items-center gap-4 w-full">
+          <p class="text-yellow-200 text-lg text-center italic tracking-wide">
+            {show.data.location}
+          </p>
+          <div class="flex flex-col items-center gap-2">
+            <span class="font-medium text-white text-lg">
+            {show.data.startDate}{show.data.startDate !== show.data.endDate ? " – " + show.data.endDate : ""}
+            </span>
+            <span
+              class="bg-pink-700/80 shadow-sm px-3 py-1 rounded-full font-bold text-white text-lg"
+            >
+              {show.data.startTime}
+            </span>
+          </div>
+        </div>
       </div>
       {
         show.data.image && (
           <picture>
-            <Image
-              src={show.data.image}
-              alt={show.data.imageAlt ? show.data.imageAlt : show.data.title}
-              width={show.data.image.width}
-              height={show.data.image.height}
-              decoding="async"
-              class="rounded-lg w-full h-auto"
-            />
+            {typeof show.data.image === "object" ? (
+              <Image
+                src={show.data.image}
+                alt={show.data.title}
+                width={show.data.image.width}
+                height={show.data.image.height}
+                decoding="async"
+                class="rounded-lg w-full h-auto"
+              />
+            ) : (
+              <img
+                src={show.data.image}
+                alt={show.data.title}
+                width={350}
+                height={350}
+                decoding="async"
+                class="rounded-lg w-full h-auto"
+              />
+            )}
           </picture>
         )
       }

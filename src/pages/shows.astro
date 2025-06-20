@@ -5,10 +5,23 @@ import CardShow from "@components/CardShow.astro";
 
 const details = await getCollection("details");
 const shows = (await getCollection("show"))
-  .filter((show) => new Date(show.data.date) >= new Date())
-  .sort(
-    (a, b) => new Date(a.data.date).valueOf() - new Date(b.data.date).valueOf(),
-  );
+  .filter((show) => {
+    // Parse "Sat, Jun 19" as MM-DD of current year
+    const [_, monthStr, dayStr] = show.data.startDate.split(' ');
+    const month = new Date(`${monthStr} 1, 2000`).getMonth(); // get month index
+    const day = parseInt(dayStr, 10);
+    const year = new Date().getFullYear();
+    const showDate = new Date(year, month, day);
+    return showDate >= new Date();
+  })
+  .sort((a, b) => {
+    const [_, amonthStr, adayStr] = a.data.startDate.split(' ');
+    const [__, bmonthStr, bdayStr] = b.data.startDate.split(' ');
+    const year = new Date().getFullYear();
+    const adate = new Date(year, new Date(`${amonthStr} 1, 2000`).getMonth(), parseInt(adayStr, 10));
+    const bdate = new Date(year, new Date(`${bmonthStr} 1, 2000`).getMonth(), parseInt(bdayStr, 10));
+    return adate.getTime() - bdate.getTime();
+  });
 ---
 
 <BaseLayout
@@ -22,7 +35,7 @@ const shows = (await getCollection("show"))
     {shows.length === 0 && <h1>No Upcoming Shows</h1>}
     {
       shows.length >= 1 && (
-        <div class="flex flex-col justify-center items-center gap-8 w-full text-center align-middle">
+        <div class="flex flex-col justify-center items-center gap-0 w-full text-center align-middle">
           <div class="flex items-center mx-auto px-6 max-w-[1320px] container">
             <div class="flex-1 bg-linear-to-r from-transparent to-pink-500 h-px" />
             <h2 class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center">
@@ -34,7 +47,7 @@ const shows = (await getCollection("show"))
           </div>
           <div
             id="upcoming-shows-list"
-            class="flex flex-col justify-center items-stretch gap-16 px-10 py-3 w-full max-w-[1400px] overflow-hidden text-center"
+            class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-3 w-full max-w-[1400px] overflow-hidden text-center"
           >
             {shows.map((show, index) => (
               <CardShow show={show} index={index} />
