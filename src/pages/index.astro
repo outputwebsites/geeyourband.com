@@ -10,8 +10,8 @@ const details = await getCollection("details");
 const homepage_content = await marked.parse(
   details[0].data.homepage_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
 );
-const donate_content = await marked.parse(
-  details[0].data.donate_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
+const tip_content = await marked.parse(
+  details[0].data.tip_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
 );
 const book_content = await marked.parse(
   details[0].data.book_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
@@ -197,7 +197,7 @@ const shows = (await getCollection("show"))
           </a>
         </div>
         <a
-          href="#donate"
+          href="#tip"
           aria-label="Leave a Tip"
           title="Leave a Tip"
           class="bg-linear-to-r from-pink-500 hover:from-pink-600 to-purple-500 hover:to-purple-600 border-0 text-white button"
@@ -341,7 +341,7 @@ const shows = (await getCollection("show"))
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
-          <span>{details[0].data.donate_title}</span>
+          <span>{details[0].data.tip_title}</span>
         </h2>
         <div class="flex-1 bg-linear-to-l from-transparent to-orange-500 h-px">
         </div>
@@ -351,7 +351,7 @@ const shows = (await getCollection("show"))
         class="flex flex-col gap-10 bg-linear-to-br from-purple-900/40 to-black mx-auto px-3 py-12 border border-purple-500/30 rounded-lg max-w-2xl text-center"
       >
         <span class="mx-auto max-w-96 text-blue-400 text-xl"
-          ><p set:html={donate_content} /></span
+          ><p set:html={tip_content} /></span
         >
         <div
           class="flex flex-col justify-center items-center mx-auto w-full text-center align-middle"

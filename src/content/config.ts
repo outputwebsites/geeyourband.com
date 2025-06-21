@@ -25,9 +25,9 @@ const detailsCollection = defineCollection({
 			book_content: z.string(),
 			book_bullets: z.array(z.string()),
 			book_sent: z.string(),
-			donate_title: z.string(),
-			donate_content: z.string(),
-			donate_footer: z.string(),
+			tip_title: z.string(),
+			tip_content: z.string(),
+			tip_footer: z.string(),
 			keywords: z.array(z.string()).optional(),
 		}),
 });

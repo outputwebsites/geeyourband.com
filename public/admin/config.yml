@@ -44,9 +44,9 @@ collections:
       summary: "{{fields.book_bullet}}"
       field: { label: Booking Bullet Point, name: book_bullet, widget: string, hint: "Booking Bullet Point that sells the band." }
     - { label: "Booking Sent Message", name: "book_sent", widget: "markdown", hint: "The message that appears after submitting a booking request. See at '/book-thanks'" }
-    - { label: "Donate Area Title", name: "donate_title", widget: "string", hint: "Title above the donate area." }
-    - { label: "Donate Area Content", name: "donate_content", widget: "markdown", hint: "Write your donate area content in the box above" }
-    - { label: "Donate Message (Footer)", name: "donate_footer", widget: "markdown", hint: "The message that appears in the footer above the Venmo donate button." }
+    - { label: "Tip Area Title", name: "tip_title", widget: "string", hint: "Title above the tip area." }
+    - { label: "Tip Area Content", name: "tip_content", widget: "markdown", hint: "Write your tip area content in the box above" }
+    - { label: "Tip Message (Footer)", name: "tip_footer", widget: "markdown", hint: "The message that appears in the footer above the Venmo tip button." }
     - label: "Keywords"
       name: "keywords"
       label_singular: "Keyword"
