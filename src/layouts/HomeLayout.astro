@@ -11,6 +11,9 @@ import "@styles/globals.css";
 
 const { description, title } = Astro.props;
 const details = await getCollection("details");
+const members = (await getCollection("member"))
+  .filter((member) => member.data.main !== false)
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
 
 <html lang="en">
@@ -109,6 +112,24 @@ const details = await getCollection("details");
       defer
       src="https://cloud.umami.is/script.js"
       data-website-id="39647070-86b0-43ee-a0df-e5d5406557c0"></script>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "MusicGroup",
+        name: details[0].data.name,
+        description: details[0].data.description,
+        image: "/assets/favicons/banner.png",
+        genre: "Dance",
+        url: details[0].data.link_website || "https://geeyourband.com",
+        sameAs: [details[0].data.link_facebook, details[0].data.link_instagram],
+        member: members.map((member) => ({
+          "@type": "Person",
+          name: member.data.name,
+          ...(member.data.instrument && { jobTitle: member.data.instrument }),
+        })),
+      })}
+    />
   </head>
   <body
     class="flex flex-col justify-between min-h-screen font-sans align-middle"

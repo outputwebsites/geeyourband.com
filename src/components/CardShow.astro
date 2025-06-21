@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { getEntries } from "astro:content";
 import { Image } from "astro:assets";
 
 export interface Props {
@@ -8,7 +9,51 @@ export interface Props {
 }
 
 const { show, index } = Astro.props;
+
+const members = (await getEntries(show.data.member))
+  .filter((member) => member.collection === "member")
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 ---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: show.data.title,
+    url: `/show/${show.slug}`,
+    startDate:
+      show.data.startDate +
+      (show.data.startTime ? `T${show.data.startTime}` : ""),
+    endDate: show.data.endDate
+      ? show.data.endDate + (show.data.endTime ? `T${show.data.endTime}` : "")
+      : undefined,
+    location: {
+      "@type": "Place",
+      name: show.data.location,
+      address: show.data.locationAddress,
+    },
+    image:
+      typeof show.data.image === "object" && show.data.image.src
+        ? show.data.image.src
+        : show.data.image,
+    description:
+      show.body
+        .split(" ")
+        .slice(0, 40)
+        .join(" ")
+        .replace(/[#*_\`]/g, "")
+        .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
+        .trim() + (show.body.split(" ").length > 40 ? "..." : ""),
+    performer: members.map((member) => ({
+      "@type": "Person",
+      name: member.data.name,
+      ...(member.data.instrument && { jobTitle: member.data.instrument }),
+    })),
+    eventStatus: "https://schema.org/EventScheduled",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  })}
+/>
 
 <a
   id={"show-" + index}
@@ -32,7 +77,11 @@ const { show, index } = Astro.props;
           </p>
           <div class="flex flex-col items-center gap-2">
             <span class="font-medium text-white text-lg">
-            {show.data.startDate}{show.data.startDate !== show.data.endDate ? " – " + show.data.endDate : ""}
+              {show.data.startDate}{
+                show.data.startDate !== show.data.endDate
+                  ? " – " + show.data.endDate
+                  : ""
+              }
             </span>
             <span
               class="bg-pink-700/80 shadow-sm px-3 py-1 rounded-full font-bold text-white text-lg"
