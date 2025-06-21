@@ -1,8 +1,12 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "src/layouts/BaseLayout.astro";
+import { marked } from "marked";
 
 const details = await getCollection("details");
+const book_content = await marked.parse(
+  details[0].data.book_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
+);
 ---
 
 <BaseLayout
@@ -28,23 +32,16 @@ const details = await getCollection("details");
       </div>
 
       <div class="gap-8 grid md:grid-cols-2 mx-auto max-w-3xl">
-        <div class="space-y-4">
-          <h3 class="font-bold text-pink-400 text-2xl">
-            Bring the 70s to Your Show
-          </h3>
-          <p class="text-yellow-100">
-            Whether you're planning a corporate show, wedding, birthday party,
-            or festival, we'll bring the authentic sounds and energy of the 70s
-            to make your show unforgettable.
-          </p>
+        <div class="flex flex-col items-start gap-6">
+          <div class="flex flex-col items-start gap-0">
+            <h3 class="font-bold text-pink-400 text-2xl">
+              {details[0].data.book_title}
+            </h3>
+          <span class="text-yellow-100"><p set:html={book_content} /></span>
+          </div>
           <ul class="space-y-2">
             {
-              [
-                "Authentic 70s sound and performance",
-                "Professional sound equipment",
-                "Customizable setlist",
-                "Disco lighting available",
-              ].map((item, index) => (
+              details[0].data.book_bullets.map((item, index) => (
                 <li
                   id={"band-features-" + index}
                   class="flex items-center gap-2"
@@ -59,7 +56,13 @@ const details = await getCollection("details");
         <div
           class="bg-linear-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
         >
-          <form class="space-y-4" name="book" method="POST" data-netlify="true">
+          <form
+            class="space-y-10"
+            name="book"
+            method="POST"
+            data-netlify="true"
+            action="/book-thanks"
+          >
             <div class="space-y-2">
               <label for="name" class="font-medium text-yellow-200 text-sm"
                 >Name</label

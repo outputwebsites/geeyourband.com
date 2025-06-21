@@ -10,13 +10,19 @@ const details = await getCollection("details");
 const homepage_content = await marked.parse(
   details[0].data.homepage_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
 );
+const donate_content = await marked.parse(
+  details[0].data.donate_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
+);
+const book_content = await marked.parse(
+  details[0].data.book_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
+);
 const members = (await getCollection("member"))
   .filter((member) => member.data.main !== false)
   .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
 const shows = (await getCollection("show"))
   .filter((show) => {
     // Parse "Sat, Jun 19" as MM-DD of current year
-    const [_, monthStr, dayStr] = show.data.startDate.split(' ');
+    const [_, monthStr, dayStr] = show.data.startDate.split(" ");
     const month = new Date(`${monthStr} 1, 2000`).getMonth(); // get month index
     const day = parseInt(dayStr, 10);
     const year = new Date().getFullYear();
@@ -24,11 +30,19 @@ const shows = (await getCollection("show"))
     return showDate >= new Date();
   })
   .sort((a, b) => {
-    const [_, amonthStr, adayStr] = a.data.startDate.split(' ');
-    const [__, bmonthStr, bdayStr] = b.data.startDate.split(' ');
+    const [_, amonthStr, adayStr] = a.data.startDate.split(" ");
+    const [__, bmonthStr, bdayStr] = b.data.startDate.split(" ");
     const year = new Date().getFullYear();
-    const adate = new Date(year, new Date(`${amonthStr} 1, 2000`).getMonth(), parseInt(adayStr, 10));
-    const bdate = new Date(year, new Date(`${bmonthStr} 1, 2000`).getMonth(), parseInt(bdayStr, 10));
+    const adate = new Date(
+      year,
+      new Date(`${amonthStr} 1, 2000`).getMonth(),
+      parseInt(adayStr, 10),
+    );
+    const bdate = new Date(
+      year,
+      new Date(`${bmonthStr} 1, 2000`).getMonth(),
+      parseInt(bdayStr, 10),
+    );
     return adate.getTime() - bdate.getTime();
   });
 ---
@@ -138,7 +152,7 @@ const shows = (await getCollection("show"))
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
-          <span>THE SKINNY</span>
+          <span>{details[0].data.homepage_title}</span>
         </h2>
         <div class="flex-1 bg-linear-to-l from-transparent to-purple-500 h-px">
         </div>
@@ -237,7 +251,7 @@ const shows = (await getCollection("show"))
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
-          <span>KEEP THE <br />GROOVE ALIVE</span>
+          <span>{details[0].data.donate_title}</span>
         </h2>
         <div class="flex-1 bg-linear-to-l from-transparent to-orange-500 h-px">
         </div>
@@ -246,10 +260,9 @@ const shows = (await getCollection("show"))
       <div
         class="flex flex-col gap-10 bg-linear-to-br from-purple-900/40 to-black mx-auto px-3 py-12 border border-purple-500/30 rounded-lg max-w-2xl text-center"
       >
-        <p class="mx-auto max-w-96 text-blue-400 text-xl">
-          Tipping supports new music, equipment, and bringing our 70s vibes to
-          more venues near you.
-        </p>
+        <span class="mx-auto max-w-96 text-blue-400 text-xl"
+          ><p set:html={donate_content} /></span
+        >
         <div
           class="flex flex-col justify-center items-center mx-auto w-full text-center align-middle"
         >
@@ -303,23 +316,16 @@ const shows = (await getCollection("show"))
       </div>
 
       <div class="gap-8 grid md:grid-cols-2 mx-auto max-w-3xl">
-        <div class="space-y-4">
-          <h3 class="font-bold text-pink-400 text-2xl">
-            Bring the 70s to Your Show
-          </h3>
-          <p class="text-yellow-100">
-            Whether you're planning a corporate show, wedding, birthday party,
-            or festival, we'll bring the authentic sounds and energy of the 70s
-            to make your show unforgettable.
-          </p>
+        <div class="flex flex-col items-start gap-6">
+          <div class="flex flex-col items-start gap-0">
+            <h3 class="font-bold text-pink-400 text-2xl">
+              {details[0].data.book_title}
+            </h3>
+            <span class="text-yellow-100"><p set:html={book_content} /></span>
+          </div>
           <ul class="space-y-2">
             {
-              [
-                "Authentic 70s sound and performance",
-                "Professional sound equipment",
-                "Customizable setlist",
-                "Disco lighting available",
-              ].map((item, index) => (
+              details[0].data.book_bullets.map((item, index) => (
                 <li
                   id={"band-features-" + index}
                   class="flex items-center gap-2"
@@ -334,7 +340,13 @@ const shows = (await getCollection("show"))
         <div
           class="bg-linear-to-br from-purple-900/40 to-black p-6 border border-purple-500/30 rounded-lg"
         >
-          <form class="space-y-4" name="book" method="POST" data-netlify="true">
+          <form
+            class="space-y-10"
+            name="book"
+            method="POST"
+            data-netlify="true"
+            action="/book-thanks"
+          >
             <div class="space-y-2">
               <label for="name" class="font-medium text-yellow-200 text-sm"
                 >Name</label

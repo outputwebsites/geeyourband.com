@@ -2,8 +2,12 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import { marked } from "marked";
 
 const details = await getCollection("details");
+const donate_content = await marked.parse(
+  details[0].data.donate_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
+);
 ---
 
 <BaseLayout
@@ -23,7 +27,7 @@ const details = await getCollection("details");
         <h2
           class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
         >
-          <span>KEEP THE <br />GROOVE ALIVE</span>
+          <span>{details[0].data.donate_title}</span>
         </h2>
         <div class="flex-1 bg-linear-to-l from-transparent to-orange-500 h-px">
         </div>
@@ -32,10 +36,9 @@ const details = await getCollection("details");
       <div
         class="flex flex-col gap-10 bg-linear-to-br from-purple-900/40 to-black mx-auto px-3 py-12 border border-purple-500/30 rounded-lg max-w-2xl text-center"
       >
-        <p class="mx-auto max-w-96 text-blue-400 text-xl">
-          Tipping supports new music, equipment, and bringing our 70s vibes to
-          more venues near you.
-        </p>
+        <span class="mx-auto max-w-96 text-blue-400 text-xl"
+          ><p set:html={donate_content} /></span
+        >
         <div
           class="flex flex-col justify-center items-center mx-auto w-full text-center align-middle"
         >

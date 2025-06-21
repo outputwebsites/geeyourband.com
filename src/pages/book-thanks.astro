@@ -1,0 +1,61 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "src/layouts/BaseLayout.astro";
+import { marked } from "marked";
+
+const details = await getCollection("details");
+const book_content = await marked.parse(
+  details[0].data.book_content?.replace(/\n(?=\n)/g, "\n\n<br/>\n") || "",
+);
+---
+
+<BaseLayout
+  title={"Thanks for Booking " + details[0].data.name}
+  description={"Thanks for Booking " +
+    details[0].data.name +
+    " - " +
+    details[0].data.description}
+>
+  {/* Book Us Section */}
+  <section id="book-us" class="relative pt-20 pb-32">
+    <div class="z-10 relative mx-auto px-6 container">
+      <div class="flex items-center mx-auto mb-12 max-w-[1320px]">
+        <div class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px">
+        </div>
+        <h2
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>SENT!</span>
+        </h2>
+        <div class="flex-1 bg-linear-to-l from-transparent to-yellow-500 h-px">
+        </div>
+      </div>
+      <div class="mb-8 text-center">
+        <p class="mx-auto mt-4 max-w-xl text-yellow-100">
+          {details[0].data.book_sent}
+        </p>
+      </div>
+      <div
+        class="flex flex-col items-start gap-6 bg-linear-to-br from-purple-900/40 to-black mx-auto mt-20 p-6 border border-purple-500/30 rounded-lg max-w-xl"
+        id="booking-details"
+      >
+        <div class="flex-col items-start gap-6">
+          <h3 class="font-bold text-pink-400 text-2xl">
+            {details[0].data.book_title}
+          </h3>
+          <span class="text-yellow-100"><p set:html={book_content} /></span>
+        </div>
+        <ul class="space-y-2">
+          {
+            details[0].data.book_bullets.map((item, index) => (
+              <li id={"band-features-" + index} class="flex items-center gap-2">
+                <div class="bg-pink-500 rounded-full w-2 h-2" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -23,13 +23,30 @@ collections:
     - { label: "Abbreviation", name: "abbreviation", widget: "string", hint: "Short name of the band." }
     - { label: "Email", name: "email", widget: "string", hint: "Email of the band." }
     - { label: "Phone Number", name: "phone", widget: "string", hint: "Main/office telephone number of the band. Use (000) 000-0000 format." }
-    - { label: "Description", name: "description", widget: "text", hint: "Short description of the band. (Max 1-2 sentences (140 character max)." }
+    - { label: "Description", name: "description", widget: "text", hint: "Short description of the band. (Max 1-2 sentences/140 characters)." }
+    - { label: "Description (SEO)", name: "description_seo", widget: "text", hint: "Short description of the band. This shows in share cards. (Max 240 characters)." }
     - { label: "Website URL", name: "link_website", widget: "string", hint: "Domain name (website link/URL) of the band." }
     - { label: "Facebook URL", name: "link_facebook", widget: "string", hint: "Facebook link/URL for the band (not an individual person)." }
     - { label: "Instagram URL", name: "link_instagram", widget: "string", hint: "Instagram link/URL for the band (not an individual person)." }
     - { label: "Venmo URL", name: "link_venmo", widget: "string", hint: "Venmo link/URL for the band (not an individual person)." }
     - { label: "Band Video", name: "band_video", widget: "string", hint: "Link/URL for the official band video (reel of clips or performance recording)." }
-    - { label: "Homepage Copy", name: "homepage_content", widget: "markdown", hint: "Write your homepage content in the box above." }
+    - { label: "Homepage Content Title", name: "homepage_title", widget: "string", hint: "Title above the homepage content." }
+    - { label: "Homepage Content", name: "homepage_content", widget: "markdown", hint: "Write your homepage content in the box above." }
+    - { label: "Booking Area Title", name: "book_title", widget: "string", hint: "Title above the booking area." }
+    - { label: "Booking Area Content", name: "book_content", widget: "markdown", hint: "Write your booking area content in the box above." }
+    - label: "Booking Bullet Points"
+      name: "book_bullets"
+      label_singular: "Booking Bullet Point"
+      widget: "list"
+      add_to_top: true
+      collapsed: true
+      minimize_collapsed: true
+      summary: "{{fields.book_bullet}}"
+      field: { label: Booking Bullet Point, name: book_bullet, widget: string, hint: "Booking Bullet Point that sells the band." }
+    - { label: "Booking Sent Message", name: "book_sent", widget: "markdown", hint: "The message that appears after submitting a booking request. See at '/book-thanks'" }
+    - { label: "Donate Area Title", name: "donate_title", widget: "string", hint: "Title above the donate area." }
+    - { label: "Donate Area Content", name: "donate_content", widget: "markdown", hint: "Write your donate area content in the box above" }
+    - { label: "Donate Message (Footer)", name: "donate_footer", widget: "markdown", hint: "The message that appears in the footer above the Venmo donate button." }
     - label: "Keywords"
       name: "keywords"
       label_singular: "Keyword"
