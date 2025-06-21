@@ -5,11 +5,24 @@ import CardShow from "@components/CardShow.astro";
 import { marked } from "marked";
 import { Image } from "astro:assets";
 
+export async function getStaticPaths() {
+  const members = await getCollection("member");
+  return members.map((member) => ({
+    params: { member: member.slug },
+    props: { member: member },
+  }));
+}
+
+const { member } = Astro.props;
+
 const details = await getCollection("details");
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 const shows = (await getCollection("show"))
+.filter((show) => {
+  return Array.isArray(show.data.member) && show.data.member.map(m => typeof m === "string" ? m : m.id).includes(member.slug);
+})
   .filter((show) => {
     // Parse "Sat, Jun 19" as MM-DD of current year
     const [_, monthStr, dayStr] = show.data.startDate.split(" ");
@@ -121,16 +134,6 @@ const shows = (await getCollection("show"))
 
     return adate.getTime() - bdate.getTime();
   });
-
-export async function getStaticPaths() {
-  const members = await getCollection("member");
-  return members.map((member) => ({
-    params: { member: member.slug },
-    props: { member: member },
-  }));
-}
-
-const { member } = Astro.props;
 const content = await marked.parse(
   member.data.bio ? member.data.bio.replace(/\n(?=\n)/g, "\n\n<br/>\n") : "",
 );
@@ -198,7 +201,7 @@ const bgColors = [
               width={350}
               height={350}
               loading="eager"
-              class="bg-transparent drop-shadow-sm"
+              class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
             />
           )
         }
@@ -239,7 +242,7 @@ const bgColors = [
             <div class="flex flex-col justify-center items-center gap-8 w-full text-center align-middle">
               <div
                 id="upcoming-shows-list"
-                class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-3 w-full max-w-[1400px] overflow-hidden text-center"
+                class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-4 w-full max-w-[1400px] overflow-hidden text-center"
               >
                 {shows.slice(0, 6).map((show, index) => (
                   <CardShow show={show} index={index} />

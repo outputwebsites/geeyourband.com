@@ -306,7 +306,7 @@ const shows = (await getCollection("show"))
           </div>
           <div
             id="upcoming-shows-list"
-            class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-3 w-full max-w-[1400px] overflow-hidden text-center"
+            class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-4 w-full max-w-[1400px] overflow-hidden text-center"
           >
             {shows.slice(0, 6).map((show, index) => (
               <CardShow show={show} index={index} />
@@ -442,6 +442,7 @@ const shows = (await getCollection("show"))
                 >Name</label
               >
               <input
+                id="name"
                 name="name"
                 placeholder="Your Name"
                 type="text"
@@ -453,6 +454,7 @@ const shows = (await getCollection("show"))
                 >Email</label
               >
               <input
+                id="email"
                 name="email"
                 placeholder="Your Email"
                 type="email"
@@ -464,6 +466,7 @@ const shows = (await getCollection("show"))
                 >Show Date</label
               >
               <input
+                id="date"
                 name="date"
                 type="date"
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full text-white"
@@ -474,6 +477,7 @@ const shows = (await getCollection("show"))
                 >Message</label
               >
               <textarea
+                id="message"
                 name="message"
                 placeholder="Tell us about your show"
                 rows={4}

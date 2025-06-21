@@ -5,7 +5,7 @@ const details = await getCollection("details");
 const shows = (await getCollection("show"))
   .filter((show) => {
     // Parse "Sat, Jun 19" as MM-DD of current year
-    const [_, monthStr, dayStr] = show.data.startDate.split(' ');
+    const [_, monthStr, dayStr] = show.data.startDate.split(" ");
     const month = new Date(`${monthStr} 1, 2000`).getMonth(); // get month index
     const day = parseInt(dayStr, 10);
     const year = new Date().getFullYear();
@@ -13,11 +13,19 @@ const shows = (await getCollection("show"))
     return showDate >= new Date();
   })
   .sort((a, b) => {
-    const [_, amonthStr, adayStr] = a.data.startDate.split(' ');
-    const [__, bmonthStr, bdayStr] = b.data.startDate.split(' ');
+    const [_, amonthStr, adayStr] = a.data.startDate.split(" ");
+    const [__, bmonthStr, bdayStr] = b.data.startDate.split(" ");
     const year = new Date().getFullYear();
-    const adate = new Date(year, new Date(`${amonthStr} 1, 2000`).getMonth(), parseInt(adayStr, 10));
-    const bdate = new Date(year, new Date(`${bmonthStr} 1, 2000`).getMonth(), parseInt(bdayStr, 10));
+    const adate = new Date(
+      year,
+      new Date(`${amonthStr} 1, 2000`).getMonth(),
+      parseInt(adayStr, 10),
+    );
+    const bdate = new Date(
+      year,
+      new Date(`${bmonthStr} 1, 2000`).getMonth(),
+      parseInt(bdayStr, 10),
+    );
     return adate.getTime() - bdate.getTime();
   });
 ---
@@ -41,7 +49,7 @@ const shows = (await getCollection("show"))
     <!-- Desktop Navigation -->
     <ul class="hidden lg:flex gap-6 pr-2" aria-label="Main navigation">
       {
-        shows.length !== 0 ? (
+        shows.length !== 0 && (
           <li>
             <a
               href="/shows"
@@ -51,18 +59,17 @@ const shows = (await getCollection("show"))
               Upcoming Shows
             </a>
           </li>
-        ) : (
-          <li>
-            <a
-              href="/band"
-              class="hover:text-yellow-400 transition"
-              title="Band Members"
-            >
-              Band Members
-            </a>
-          </li>
         )
       }
+      <li>
+        <a
+          href="/band"
+          class="hover:text-yellow-400 transition"
+          title="Band Members"
+        >
+          Band Members
+        </a>
+      </li>
       <li>
         <a
           href="/tip"

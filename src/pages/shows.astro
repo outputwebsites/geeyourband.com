@@ -144,7 +144,7 @@ const shows = (await getCollection("show"))
           </div>
           <div
             id="upcoming-shows-list"
-            class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-3 w-full max-w-[1400px] overflow-hidden text-center"
+            class="flex flex-col justify-center items-stretch gap-8 px-10 pt-12 pb-4 w-full max-w-[1400px] overflow-hidden text-center"
           >
             {shows.map((show, index) => (
               <CardShow show={show} index={index} />

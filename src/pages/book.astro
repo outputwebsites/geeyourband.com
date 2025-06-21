@@ -68,6 +68,7 @@ const book_content = await marked.parse(
                 >Name</label
               >
               <input
+                id="name"
                 name="name"
                 placeholder="Your Name"
                 type="text"
@@ -79,6 +80,7 @@ const book_content = await marked.parse(
                 >Email</label
               >
               <input
+                id="email"
                 name="email"
                 placeholder="Your Email"
                 type="email"
@@ -90,6 +92,7 @@ const book_content = await marked.parse(
                 >Show Date</label
               >
               <input
+                id="date"
                 name="date"
                 type="date"
                 class="bg-black/50 px-3 py-2 border border-purple-500/50 rounded-md focus:outline-hidden focus:ring-2 focus:ring-pink-500 w-full text-white"
@@ -100,6 +103,7 @@ const book_content = await marked.parse(
                 >Message</label
               >
               <textarea
+                
                 name="message"
                 placeholder="Tell us about your show"
                 rows={4}
