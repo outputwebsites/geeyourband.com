@@ -20,9 +20,14 @@ const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 const shows = (await getCollection("show"))
-.filter((show) => {
-  return Array.isArray(show.data.member) && show.data.member.map(m => typeof m === "string" ? m : m.id).includes(member.slug);
-})
+  .filter((show) => {
+    return (
+      Array.isArray(show.data.member) &&
+      show.data.member
+        .map((m) => (typeof m === "string" ? m : m.id))
+        .includes(member.slug)
+    );
+  })
   .filter((show) => {
     // Parse "Sat, Jun 19" as MM-DD of current year
     const [_, monthStr, dayStr] = show.data.startDate.split(" ");
@@ -181,7 +186,12 @@ const bgColors = [
                   width={member.data.photo.width}
                   height={member.data.photo.height}
                   loading="eager"
-                  class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+                  class="rounded-lg w-full h-full object-cover"
+                  style={
+                    member.data.photoColor
+                      ? `background-color: ${member.data.photoColor};`
+                      : bgColors[member.data.order % bgColors.length]
+                  }
                 />
               ) : (
                 <img
@@ -190,7 +200,12 @@ const bgColors = [
                   width={350}
                   height={350}
                   loading="eager"
-                  class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+                  class="rounded-lg w-full h-full object-cover"
+                  style={
+                    member.data.photoColor
+                      ? `background-color: ${member.data.photoColor};`
+                      : bgColors[member.data.order % bgColors.length]
+                  }
                 />
               )}
             </picture>
@@ -201,7 +216,12 @@ const bgColors = [
               width={350}
               height={350}
               loading="eager"
-              class={`${bgColors[member.data.order % bgColors.length]} w-full h-full object-cover rounded-lg`}
+              class="rounded-lg w-full h-full object-cover"
+              style={
+                member.data.photoColor
+                  ? `background-color: ${member.data.photoColor};`
+                  : bgColors[member.data.order % bgColors.length]
+              }
             />
           )
         }
