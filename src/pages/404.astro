@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "src/layouts/BaseLayout.astro";
+
+const details = await getCollection("details");
+---
+
+<BaseLayout
+  title={"Error 404: Page Not Found - " + details[0].data.name}
+  description={"Error 404: Page Not Found - " +
+    details[0].data.name +
+    " - " +
+    details[0].data.description}
+>
+  {/* Error Section */}
+  <section id="error-404" class="relative pt-20 pb-32">
+    <div class="z-10 relative mx-auto px-6 container">
+      <div class="flex items-center mx-auto mb-12 max-w-[1320px]">
+        <div class="flex-1 bg-linear-to-r from-transparent to-yellow-500 h-px">
+        </div>
+        <h2
+          id="Error 404"
+          class="flex items-center gap-2 px-4 font-bold text-yellow-300 text-3xl md:text-4xl text-center"
+        >
+          <span>Error 404: <br />Page Not Found</span>
+        </h2>
+        <div class="flex-1 bg-linear-to-l from-transparent to-yellow-500 h-px">
+        </div>
+      </div>
+      <div class="text-center">
+        <p class="mx-auto mt-4 max-w-xl text-yellow-100">
+          It seems the page you are looking for has moved, is no longer
+          available, has been archived, or was not valid.
+        </p>
+        <p class="mx-auto mt-2 max-w-xl text-yellow-100">
+          Please check the URL or return to the <a
+            href="/"
+            class="text-pink-400 hover:underline">homepage</a
+          >.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
