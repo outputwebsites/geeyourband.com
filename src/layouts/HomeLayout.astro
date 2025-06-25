@@ -119,7 +119,7 @@ const members = (await getCollection("member"))
         "@type": "MusicGroup",
         name: details[0].data.name,
         description: details[0].data.description,
-        image: "/assets/favicons/banner.png",
+        image: `https://${details[0].data.link_website || "geeyourband.com"}/assets/favicons/banner.png`,
         genre: "Dance",
         url: details[0].data.link_website || "https://geeyourband.com",
         sameAs: [details[0].data.link_facebook, details[0].data.link_instagram],

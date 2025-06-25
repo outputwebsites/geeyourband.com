@@ -14,6 +14,7 @@ export async function getStaticPaths() {
   }));
 }
 
+const details = await getCollection("details");
 const { show } = Astro.props;
 const content = await marked.parse(
   show.body.replace(/\n(?=\n)/g, "\n\n<br/>\n"),
@@ -22,25 +23,99 @@ const content = await marked.parse(
 const members = (await getEntries(show.data.member))
   .filter((member) => member.collection === "member")
   .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+
+// Helper functions moved to front matter
+function parseDateTime(dateStr, timeStr) {
+  // Parse date like "Sat, Jun 12"
+  const [_, monthStr, dayStr] =
+    dateStr?.match(/^[A-Za-z]+,\s([A-Za-z]+)\s(\d{1,2})$/) || [];
+  const year = new Date().getFullYear();
+  if (!monthStr || !dayStr) return undefined;
+  // Parse time like "9:32pm" or "11:00am"
+  let hour = 0,
+    minute = 0;
+  if (timeStr) {
+    const timeMatch = timeStr.match(/^(\d{1,2}):(\d{2})(am|pm)$/i);
+    if (timeMatch) {
+      hour = parseInt(timeMatch[1], 10);
+      minute = parseInt(timeMatch[2], 10);
+      const ampm = timeMatch[3].toLowerCase();
+      if (ampm === "pm" && hour !== 12) hour += 12;
+      if (ampm === "am" && hour === 12) hour = 0;
+    }
+  }
+  // Build local date string
+  const localDateStr = `${monthStr} ${dayStr}, ${year} ${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}:00`;
+
+  // Use show.data.timezone if available, otherwise default to 'America/New_York'
+  const tz = show?.data?.timezone || "America/New_York";
+  // Convert to UTC using Intl.DateTimeFormat and Date
+  const dateObj = new Date(
+    new Date(localDateStr + " " + tz).toLocaleString("en-US", {
+      timeZone: "UTC",
+    }),
+  );
+  // Format as ISO string with 'Z'
+  return dateObj.toISOString().replace(/\.\d{3}Z$/, "Z");
+}
+
+const startDateISO = parseDateTime(show.data.startDate, show.data.startTime);
+const endDateISO = show.data.endDate
+  ? parseDateTime(show.data.endDate, show.data.endTime)
+  : undefined;
+
+// Helper to parse address string into parts
+function parseAddress(addressStr) {
+  // Example: "123 Wallaby Way, Cincinnati, OH 45213"
+  if (!addressStr) return {};
+  const regex = /^(.+?),\s*([^,]+),\s*([A-Z]{2})\s*(\d{5})?$/;
+  const match = addressStr.match(regex);
+  if (!match) return {};
+  return {
+    streetAddress: match[1].trim(),
+    addressLocality: match[2].trim(),
+    addressRegion: match[3].trim(),
+    postalCode: match[4] ? match[4].trim() : "",
+    addressCountry: "US",
+  };
+}
+
+const addressParts = parseAddress(show.data.locationAddress);
 ---
+
 <script
   type="application/ld+json"
   set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "MusicEvent",
     name: show.data.title,
-    url: `/show/${show.slug}`,
-    startDate:
-      show.data.startDate +
-      (show.data.startTime ? `T${show.data.startTime}` : ""),
-    endDate: show.data.endDate
-      ? show.data.endDate + (show.data.endTime ? `T${show.data.endTime}` : "")
-      : undefined,
+    url: `https://${details[0].data.link_website || "geeyourband.com"}/show/${show.slug}`,
+    startDate: startDateISO,
+    endDate: endDateISO,
     location: {
       "@type": "Place",
       name: show.data.location,
-      address: show.data.locationAddress,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: addressParts.streetAddress || "",
+        addressLocality: addressParts.addressLocality || "",
+        addressRegion: addressParts.addressRegion || "",
+        postalCode: addressParts.postalCode || "",
+        addressCountry: {
+          "@type": "Country",
+          name: addressParts.addressCountry || "US",
+        },
+      },
     },
+    // offers: {
+    //   "@type": "Offer",
+    //   name: "General Admission",
+    //   price: 9.0,
+    //   priceCurrency: "USD",
+    //   validFrom: validFrom || startDateISO,
+    //   url: "",
+    //   availability: (availability ? "https://schema.org/InStock" : "https://schema.org/SoldOut"),
+    // },
     image:
       typeof show.data.image === "object" && show.data.image.src
         ? show.data.image.src
@@ -53,11 +128,22 @@ const members = (await getEntries(show.data.member))
         .replace(/[#*_\`]/g, "")
         .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
         .trim() + (show.body.split(" ").length > 40 ? "..." : ""),
-    performer: members.map((member) => ({
-      "@type": "Person",
-      name: member.data.name,
-      ...(member.data.instrument && { jobTitle: member.data.instrument }),
-    })),
+    performer: [
+      {
+        "@type": "MusicGroup",
+        name: details[0].data.name,
+        description: details[0].data.description,
+        image: `https://${details[0].data.link_website || "geeyourband.com"}/assets/favicons/banner.png`,
+        genre: "Dance",
+        url: details[0].data.link_website || "https://geeyourband.com",
+        sameAs: [details[0].data.link_facebook, details[0].data.link_instagram],
+      },
+      ...members.map((member) => ({
+        "@type": "Person",
+        name: member.data.name,
+        ...(member.data.instrument && { jobTitle: member.data.instrument }),
+      })),
+    ],
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   })}
