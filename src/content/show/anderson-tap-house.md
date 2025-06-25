@@ -14,7 +14,6 @@ member:
   - leo-dynamite
   - tommy-salami
   - will-power
-image: src/assets/images/media/wallpaper-2.webp
 ---
 Anderson Tap House
 
