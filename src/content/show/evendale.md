@@ -1,5 +1,12 @@
 ---
 title: Evendale
+startDate: Sat, Jul 19
+startTime: 7:00pm
+endDate: Sat, Jul 19
+endTime: 9:30pm
+timezone: EDT
+location: Evendale Municipal Complex
+locationAddress: 10500 Reading Rd, Cincinnati, OH 45241
 member:
   - allison-wonderland
   - bobby-dingo
@@ -7,11 +14,6 @@ member:
   - leo-dynamite
   - tommy-salami
   - will-power
-startDate: "Sat, Jul 19"
-startTime: "7:00pm"
-endDate: "Sat, Jul 19"
-endTime: "9:30pm"
-timezone: "EDT"
 ---
 Evendale
 
