@@ -3,7 +3,6 @@ import { getCollection, getEntries } from "astro:content";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import CardMemberSmall from "@components/CardMemberSmall.astro";
 import { marked } from "marked";
-import { formatDate } from "@js/utils";
 import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
@@ -62,7 +61,7 @@ function parseDateTime(dateStr, timeStr) {
 const startDateISO = parseDateTime(show.data.startDate, show.data.startTime);
 const endDateISO = show.data.endDate
   ? parseDateTime(show.data.endDate, show.data.endTime)
-  : undefined;
+  : startDateISO;
 
 // Helper to parse address string into parts
 function parseAddress(addressStr) {
@@ -87,26 +86,34 @@ const addressParts = parseAddress(show.data.locationAddress);
   type="application/ld+json"
   set:html={JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "MusicEvent",
+    "@type": "Event",
     name: show.data.title,
     url: `https://${details[0].data.link_website || "geeyourband.com"}/show/${show.slug}`,
     startDate: startDateISO,
     endDate: endDateISO,
-    location: {
-      "@type": "Place",
-      name: show.data.location,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: addressParts.streetAddress || "",
-        addressLocality: addressParts.addressLocality || "",
-        addressRegion: addressParts.addressRegion || "",
-        postalCode: addressParts.postalCode || "",
-        addressCountry: {
-          "@type": "Country",
-          name: addressParts.addressCountry || "US",
-        },
-      },
-    },
+    ...(show.data.location || show.data.locationAddress
+      ? {
+          location: {
+            "@type": "Place",
+            ...(show.data.location ? { name: show.data.location } : {}),
+            ...(show.data.locationAddress
+              ? {
+                  address: {
+                    "@type": "PostalAddress",
+                    streetAddress: addressParts.streetAddress || "",
+                    addressLocality: addressParts.addressLocality || "",
+                    addressRegion: addressParts.addressRegion || "",
+                    postalCode: addressParts.postalCode || "",
+                    addressCountry: {
+                      "@type": "Country",
+                      name: addressParts.addressCountry || "US",
+                    },
+                  },
+                }
+              : {}),
+          },
+        }
+      : {}),
     // offers: {
     //   "@type": "Offer",
     //   name: "General Admission",
@@ -116,10 +123,25 @@ const addressParts = parseAddress(show.data.locationAddress);
     //   url: "",
     //   availability: (availability ? "https://schema.org/InStock" : "https://schema.org/SoldOut"),
     // },
-    image:
-      typeof show.data.image === "object" && show.data.image.src
-        ? show.data.image.src
-        : show.data.image,
+    offers: {
+      "@type": "Offer",
+      availability: "https://schema.org/InStock",
+      url: `https://${details[0].data.link_website || "geeyourband.com"}/show/${show.slug}`,
+    },
+    image: show.data.image
+      ? typeof show.data.image === "object" && show.data.image.src
+        ? (() => {
+            // Remove query params from image src
+            const cleanSrc = show.data.image.src.split("?")[0];
+            return `https://${details[0].data.link_website || "geeyourband.com"}${cleanSrc.startsWith("/") ? "" : "/"}${cleanSrc.replace(/^\/+/, "")}`;
+          })()
+        : typeof show.data.image === "string" &&
+            show.data.image.startsWith("http")
+          ? show.data.image.split("?")[0]
+          : typeof show.data.image === "string"
+            ? `https://${details[0].data.link_website || "geeyourband.com"}${show.data.image.split("?")[0].startsWith("/") ? "" : "/"}${show.data.image.split("?")[0].replace(/^\/+/, "")}`
+            : `https://${details[0].data.link_website || "geeyourband.com"}/assets/favicons/banner.png`
+      : `https://${details[0].data.link_website || "geeyourband.com"}/assets/favicons/banner.png`,
     description:
       show.body
         .split(" ")
@@ -144,6 +166,13 @@ const addressParts = parseAddress(show.data.locationAddress);
         ...(member.data.instrument && { jobTitle: member.data.instrument }),
       })),
     ],
+    organizer: {
+      "@type": "MusicGroup",
+      name: details[0].data.name,
+      image: `https://${details[0].data.link_website || "geeyourband.com"}/assets/favicons/banner.png`,
+      url: `https://${details[0].data.link_website || "geeyourband.com"}`,
+      sameAs: [details[0].data.link_facebook, details[0].data.link_instagram],
+    },
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   })}
@@ -199,12 +228,44 @@ const addressParts = parseAddress(show.data.locationAddress);
         <h1 id={show.data.title}>{show.data.title}</h1>
         <div class="flex flex-col items-center gap-4 w-full">
           <div class="flex flex-col items-center gap-0">
-            <p class="text-yellow-200 text-lg text-center italic tracking-wide">
-              {show.data.location}
-            </p>
-            <p class="text-yellow-200 text-base text-center tracking-wide">
-              {show.data.locationAddress}
-            </p>
+            {
+              show.data.location && (
+                <p class="text-yellow-200 text-lg text-center italic tracking-wide">
+                  {show.data.location}
+                </p>
+              )
+            }
+            {
+              show.data.locationAddress && (
+                <p class="text-yellow-200 text-base text-center tracking-wide">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(show.data.locationAddress)}`}
+                    title={`View ${show.data.location ? show.data.location : show.data.locationAddress} on Google Maps`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group inline-flex items-center gap-1 hover:text-yellow-300 underline transition"
+                  >
+                    {show.data.locationAddress}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="opacity-80 group-hover:opacity-100 ml-1 w-4 h-4 text-yellow-200 group-hover:text-yellow-300 transition"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <title>Opens in new tab</title>
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M14 3h7m0 0v7m0-7L10 14m-4 0v7a2 2 0 002 2h7a2 2 0 002-2v-7"
+                      />
+                    </svg>
+                  </a>
+                </p>
+              )
+            }
           </div>
           <div class="flex flex-col items-center gap-2">
             <span class="font-medium text-white text-lg">
@@ -230,7 +291,7 @@ const addressParts = parseAddress(show.data.locationAddress);
             id="members-and-content"
             class="flex flex-col justify-left items-stretch gap-4 mx-auto max-w-3xl"
           >
-            <div class="flex flex-col justify-left items-stretch gap-2 mb-6 pb-6 border-yellow-400 border-t border-b">
+            <div class="flex flex-col justify-center items-stretch gap-2 mb-6 pb-6 border-yellow-400 border-t border-b text-center">
               <h2 class="pt-4 text-base">Band</h2>
               <div class="flex-col justify-left items-stretch gap-6 max-[376px]:gap-2 grid grid-cols-3 max-[550px]:grid-cols-2">
                 {members.map((member, index) => (
